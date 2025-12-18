@@ -1,0 +1,9 @@
+{
+  "theme": "default",
+  "customCss": "./typedoc/custom.css",
+  "entryPoints": ["src/index.ts"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "disableSources": true,
+  "sort": ["source-order"]
+}

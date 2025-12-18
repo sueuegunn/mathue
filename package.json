@@ -1,0 +1,29 @@
+{
+  "name": "mathue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run --coverage",
+    "doc": "typedoc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "@vitest/coverage-v8": "^4.0.6",
+    "typedoc": "^0.28.15",
+    "typescript": "~5.9.3",
+    "vite": "npm:rolldown-vite@7.1.14",
+    "vitest": "^4.0.6"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.1.14"
+  },
+  "dependencies": {
+    "@types/gl-matrix": "^2.4.5",
+    "gl-matrix": "^3.4.4"
+  }
+}
