@@ -9,10 +9,6 @@ import type { Scalable } from "./Scalable";
 
 const EPSILON = 0.0001;
 
-const toIndex = (row: number, column: number, rank: number): number => {
-  return row * rank + column;
-};
-
 class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonable<Matrix4> {
   /**
    * @example
@@ -427,7 +423,7 @@ class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonab
     for (const row of range(rank)) {
       const scalar = this.indexToScalar(row, scale);
       for (const column of range(rank)) {
-        const index = toIndex(row, column, rank);
+        const index = row * rank + column;
         this.elements[index] *= scalar;
       }
     }

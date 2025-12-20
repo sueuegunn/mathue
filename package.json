@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "main": "src/index.ts",
+  "repository": { "url": "https://github.com/sueuegunn/mathue"},
+  "homepage": "https://sueuegunn.github.io/mathue",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

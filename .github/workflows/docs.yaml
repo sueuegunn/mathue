@@ -1,0 +1,14 @@
+name: Deploy Docs
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubunts-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run doc
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: ./docs }
+      - uses: actions/deploy-pages@v4
