@@ -2,6 +2,8 @@ name: Deploy Docs
 on: [push]
 jobs:
   deploy:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
