@@ -2,7 +2,7 @@ name: Deploy Docs
 on: [push]
 jobs:
   deploy:
-    runs-on: ubunts-slim
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
