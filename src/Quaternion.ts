@@ -1,8 +1,11 @@
+import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
 import type { Matrix4 } from "./Matrix4";
+import type { Multiplicative } from "./Multiplicative";
+import type { Scalable } from "./Scalable";
 import { Vector3 } from "./Vector3";
 
-class Quaternion implements Clonable<Quaternion> {
+class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multiplicative<Quaternion>, Scalable<Quaternion> {
   private _a: number;
   private _b: number;
   private _c: number;
@@ -48,11 +51,17 @@ class Quaternion implements Clonable<Quaternion> {
     return new Quaternion(a, b, c, d);
   }
 
-  setValues(a: number, b: number, c: number, d: number): void {
+  setValues(a: number, b: number, c: number, d: number): Quaternion {
     this._a = a;
     this._b = b;
     this._c = c;
     this._d = d;
+    return this;
+  }
+
+  set(other: Quaternion): Quaternion {
+    const {a, b, c, d} = other;
+    return this.setValues(a, b, c, d);
   }
 
   setIdentity(): void {
@@ -70,13 +79,29 @@ class Quaternion implements Clonable<Quaternion> {
     this.setValues(Math.cos(radian / 2), x * sin, y * sin, z * sin);
   }
 
-  norm(): number {
+  squaredNorm(): number {
     const {a, b, c, d} = this;
     return a ** 2 + b ** 2 + c ** 2 + d ** 2;
   }
 
+  norm(): number {
+    return Math.sqrt(this.squaredNorm());
+  }
+
+  conjugate(): Quaternion {
+    this._b *= -1;
+    this._c *= -1;
+    this._d *= -1;
+    return this;
+  }
+
+  inverse(): Quaternion {
+    const norm2 = this.squaredNorm();
+    return this.conjugate().scalarDivide(norm2);
+  }
+
   setToMatrix4(matrix: Matrix4): void {
-    const s = 2 / this.norm();
+    const s = 2 / this.squaredNorm();
     const {a, b, c, d} = this;
     const b2 = b ** 2;
     const c2 = c ** 2;
@@ -107,6 +132,24 @@ class Quaternion implements Clonable<Quaternion> {
     );
   }
 
+  add(other: Quaternion): Quaternion {
+    const {a, b, c, d} = other;
+    this._a += a;
+    this._b += b;
+    this._c += c;
+    this._d += d;
+    return this;
+  }
+
+  subtract(other: Quaternion): Quaternion {
+    const {a, b, c, d} = other;
+    this._a -= a;
+    this._b -= b;
+    this._c -= c;
+    this._d -= d;
+    return this;
+  }
+
   multiply(other: Quaternion): Quaternion {
     const {a: ta, b: tb, c: tc, d: td} = this;
     const {a: oa, b: ob, c: oc, d: od} = other;
@@ -114,6 +157,28 @@ class Quaternion implements Clonable<Quaternion> {
     this._b = ta * ob + tb * oa + tc * od - td * oc;
     this._c = ta * oc - tb * od + tc * oa + td * ob;
     this._d = ta * od + tb * oc - tc * ob + td * oa;
+    return this;
+  }
+
+  divide(other: Quaternion): Quaternion {
+    const {temporary} = Quaternion;
+    temporary.set(other).inverse();
+    return this.multiply(temporary);
+  }
+
+  scalarMultiply(scalar: number): Quaternion {
+    this._a *= scalar;
+    this._b *= scalar;
+    this._c *= scalar;
+    this._d *= scalar;
+    return this;
+  }
+
+  scalarDivide(scalar: number): Quaternion {
+    this._a /= scalar;
+    this._b /= scalar;
+    this._c /= scalar;
+    this._d /= scalar;
     return this;
   }
 

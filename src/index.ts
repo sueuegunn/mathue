@@ -1,6 +1,9 @@
+import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
-import type { FourArithmeticOperations } from "./FourArithmeticOperations";
-import type { Dimension, Vector } from "./type";
+import type { Dimension, TupleOf } from "./types";
+import type { Multiplicative } from "./Multiplicative";
+import type { Scalable } from "./Scalable";
+import type { Vector } from "./Vector";
 import { Matrix4 } from "./Matrix4";
 import { PolarCoordinate3 } from "./PolarCoordinate3";
 import { Quaternion } from "./Quaternion";
@@ -20,8 +23,14 @@ export {
 };
 
 export type {
+  Additive,
   Clonable,
-  FourArithmeticOperations,
-  Dimension,
+  Multiplicative,
+  Scalable,
   Vector,
+};
+
+export type {
+  Dimension,
+  TupleOf,
 };

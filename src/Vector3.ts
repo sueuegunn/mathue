@@ -1,11 +1,13 @@
+import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
-import type { Vector } from "./type";
+import type { Scalable } from "./Scalable";
+import type { Vector } from "./Vector";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
 const INDEX_Z = 2;
 
-class Vector3 implements Vector<3>, Clonable<Vector3> {
+class Vector3 implements Vector<3>, Clonable<Vector3>, Additive<Vector3>, Scalable<Vector3> {
   readonly dimension = 3;
   readonly elements: [number, number, number];
 
@@ -81,14 +83,14 @@ class Vector3 implements Vector<3>, Clonable<Vector3> {
     return this;
   }
 
-  multiply(scalar: number): Vector3 {
+  scalarMultiply(scalar: number): Vector3 {
     this.x *= scalar;
     this.y *= scalar;
     this.z *= scalar;
     return this;
   }
 
-  divide(scalar: number): Vector3 {
+  scalarDivide(scalar: number): Vector3 {
     this.x /= scalar;
     this.y /= scalar;
     this.z /= scalar;
@@ -118,7 +120,7 @@ class Vector3 implements Vector<3>, Clonable<Vector3> {
     if (length <= 0) {
       return this;
     }
-    return this.divide(length);
+    return this.scalarDivide(length);
   }
 }
 

@@ -1,12 +1,14 @@
+import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
-import type { Vector } from "./type";
+import type { Scalable } from "./Scalable";
+import type { Vector } from "./Vector";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
 const INDEX_Z = 2;
 const INDEX_W = 3;
 
-class Vector4 implements Vector<4>, Clonable<Vector4> {
+class Vector4 implements Vector<4>, Clonable<Vector4>, Additive<Vector4>, Scalable<Vector4> {
   readonly dimension = 4;
   readonly elements: [number, number, number, number];
 
@@ -92,7 +94,7 @@ class Vector4 implements Vector<4>, Clonable<Vector4> {
     return this;
   }
 
-  multiply(scalar: number): Vector4 {
+  scalarMultiply(scalar: number): Vector4 {
     this.x *= scalar;
     this.y *= scalar;
     this.z *= scalar;
@@ -100,7 +102,7 @@ class Vector4 implements Vector<4>, Clonable<Vector4> {
     return this;
   }
 
-  divide(scalar: number): Vector4 {
+  scalarDivide(scalar: number): Vector4 {
     this.x /= scalar;
     this.y /= scalar;
     this.z /= scalar;
@@ -118,7 +120,7 @@ class Vector4 implements Vector<4>, Clonable<Vector4> {
     if (length <= 0) {
       return this;
     }
-    return this.divide(length);
+    return this.scalarDivide(length);
   }
 }
 

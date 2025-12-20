@@ -1,10 +1,11 @@
+import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
-import type { FourArithmeticOperations } from "./FourArithmeticOperations";
-import type { Vector } from "./type";
+import type { Scalable } from "./Scalable";
+import type { Vector } from "./Vector";
 
 const INDEX_X = 0;
 
-class Vector1 implements Vector<1>, Clonable<Vector1>, FourArithmeticOperations<Vector1> {
+class Vector1 implements Vector<1>, Clonable<Vector1>, Additive<Vector1>, Scalable<Vector1> {
   /**
    * @example
    * ```ts
@@ -153,11 +154,11 @@ class Vector1 implements Vector<1>, Clonable<Vector1>, FourArithmeticOperations<
    * @example
    * ```ts
    * const v = new Vector1(2);
-   * v.multiply(3);
+   * v.scalarMultiply(3);
    * console.log(v.x); // 6
    * ```
    */
-  multiply(scalar: number): Vector1 {
+  scalarMultiply(scalar: number): Vector1 {
     this.x *= scalar;
     return this;
   }
@@ -166,11 +167,11 @@ class Vector1 implements Vector<1>, Clonable<Vector1>, FourArithmeticOperations<
    * @example
    * ```ts
    * const v = new Vector1(6);
-   * v.divide(2);
+   * v.scalarDivide(2);
    * console.log(v.x); // 3
    * ```
    */
-  divide(scalar: number): Vector1 {
+  scalarDivide(scalar: number): Vector1 {
     this.x /= scalar;
     return this;
   }

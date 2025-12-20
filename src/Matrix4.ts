@@ -91,7 +91,7 @@ class Matrix4 extends Float32Array implements Clonable<Matrix4> {
 
   setQuaternion(quaternion: Quaternion): Matrix4 {
     const {a, b, c, d} = quaternion;
-    const s = 2 / quaternion.norm();
+    const s = 2 / quaternion.squaredNorm();
     const b2 = b ** 2;
     const c2 = c ** 2;
     const d2 = d ** 2;
