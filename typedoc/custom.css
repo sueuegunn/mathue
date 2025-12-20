@@ -1,3 +1,7 @@
+p {
+  margin-block-start: 4px;
+}
+
 h3.tsd-anchor-link {
   margin-top: 4px;
   padding-bottom: 0;

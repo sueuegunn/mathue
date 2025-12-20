@@ -11,6 +11,7 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
   private _c: number;
   private _d: number;
 
+  /** @ignore */
   static temporary = Quaternion.identity();
 
   private constructor(a: number, b: number, c: number, d: number) {
@@ -36,6 +37,13 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
     return this._d;
   }
 
+  /**
+   * @example
+   * ```ts
+   * const q = Quaternion.identity();
+   * console.log(q); // (1, 0, 0, 0)
+   * ```
+   */
   static identity(): Quaternion {
     return new Quaternion(1, 0, 0, 0);
   }

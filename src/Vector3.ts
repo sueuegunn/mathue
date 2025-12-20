@@ -1,13 +1,13 @@
-import type { Additive } from "./Additive";
-import type { Clonable } from "./Clonable";
-import type { Scalable } from "./Scalable";
 import type { Vector } from "./Vector";
+import type { Additive } from "./Additive";
+import type { Scalable } from "./Scalable";
+import type { Clonable } from "./Clonable";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
 const INDEX_Z = 2;
 
-class Vector3 implements Vector<3>, Clonable<Vector3>, Additive<Vector3>, Scalable<Vector3> {
+class Vector3 implements Vector<3>, Additive<Vector3>, Scalable<Vector3>, Clonable<Vector3> {
   readonly dimension = 3;
   readonly elements: [number, number, number];
 

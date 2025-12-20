@@ -3,6 +3,7 @@
   "customCss": "./typedoc/custom.css",
   "entryPoints": ["src/index.ts"],
   "entryPointStrategy": "expand",
+  "excludePrivate": true,
   "out": "docs",
   "disableSources": true,
   "sort": ["source-order"]
