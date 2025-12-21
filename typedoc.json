@@ -1,4 +1,5 @@
 {
+  "name": "mathue",
   "theme": "default",
   "customCss": "./typedoc/custom.css",
   "favicon": "./typedoc/favicon.ico",
@@ -6,10 +7,13 @@
   "entryPointStrategy": "expand",
   "excludePrivate": true,
   "out": "docs",
-  "disableSources": true,
+  "disableSources": false,
   "sort": ["source-order"],
   "groupOrder": ["Properties", "Accessors", "Constructors", "Factory Methods", "Methods"],
   "githubPages": true,
   "gitRevision": "master",
-  "gitRemote": "origin"
+  "gitRemote": "origin",
+  "navigationLinks": {
+    "GitHub": "https://github.com/sueuegunn/mathue"
+  }
 }
