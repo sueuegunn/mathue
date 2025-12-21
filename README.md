@@ -1,2 +1,2 @@
-| ![Logo](typedoc/favicon.ico) | # **mathue** |
+| ![Logo](typedoc/favicon.ico) | # mathue |
 |---|---|
