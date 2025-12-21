@@ -1,4 +1,4 @@
-<table style="border:none">
+<table style="border-collapse:collapse">
   <tr>
     <th style="border:none">
       <img src="typedoc/favicon.ico" width="200" alt="mathue icon">
