@@ -85,6 +85,7 @@ class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonab
 
   /**
    * @returns new identity matrix instance
+   * @group Factory Methods
    * 
    * @example
    * ```ts
@@ -103,6 +104,7 @@ class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonab
 
   /**
    * @returns new zero matrix instance
+   * @group Factory Methods
    * 
    * @example
    * ```ts
@@ -477,7 +479,7 @@ class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonab
     const {x: px, y: py, z: pz} = position;
     const {x: ux, y: uy, z: uz} = up;
     const toPosition = position.clone().subtract(target);
-    const length = toPosition.magnitude();
+    const length = toPosition.length();
     if (length < EPSILON) {
       return this;
     }

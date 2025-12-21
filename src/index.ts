@@ -3,6 +3,7 @@ import type { Additive } from "./Additive";
 import type { Clonable } from "./Clonable";
 import type { Matrix } from "./Matrix";
 import type { Multiplicative } from "./Multiplicative";
+import type { Normalizable } from "./Normalizable";
 import type { Scalable } from "./Scalable";
 import type { Vector } from "./Vector";
 import { Matrix4 } from "./Matrix4";
@@ -25,6 +26,7 @@ export type {
   Clonable,
   Matrix,
   Multiplicative,
+  Normalizable,
   Scalable,
   Vector,
 };

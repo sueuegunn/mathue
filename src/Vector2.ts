@@ -2,11 +2,12 @@ import type { Vector } from "./Vector";
 import type { Additive } from "./Additive";
 import type { Scalable } from "./Scalable";
 import type { Clonable } from "./Clonable";
+import type { Normalizable } from "./Normalizable";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
 
-class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonable<Vector2> {
+class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Normalizable<Vector2>, Clonable<Vector2> {
   /**
    * @example
    * ```ts
@@ -82,6 +83,36 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @returns new zero vector instance
+   * @group Factory Methods
+   * 
+   * @example
+   * ```ts
+   * const v = Vector2.zero();
+   * console.log(v); // (0, 0)
+   * ```
+   */
+  static zero(): Vector2 {
+    return new Vector2(0, 0);
+  }
+
+  /**
+   * @returns new all ones vector instance
+   * @group Factory Methods
+   * 
+   * @example
+   * ```ts
+   * const v = Vector2.allOnes();
+   * console.log(v); // (1, 1)
+   * ```
+   */
+  static allOnes(): Vector2 {
+    return new Vector2(1, 1);
+  }
+
+  /**
+   * @returns new cloned vector instance
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
@@ -95,28 +126,24 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * determines if this vector is the zero vector (all components are zero)
+   * @returns `true` if this vector is exactly zero, `false` otherwise
+   * 
    * @example
    * ```ts
-   * const v = Vector2.zero();
-   * console.log(v); // (0, 0)
-   * ```
+   * const zero = Vector2.zero();
+   * const ones = Vector2.allOnes();
+   * console.log(zero.isZero()); // true
+   * console.log(ones.isZero()); // false
    */
-  static zero(): Vector2 {
-    return new Vector2(0, 0);
+  isZero(): boolean {
+    const {x, y} = this;
+    return x === 0 && y === 0;
   }
 
   /**
-   * @example
-   * ```ts
-   * const v = Vector2.allOnes();
-   * console.log(v); // (1, 1)
-   * ```
-   */
-  static allOnes(): Vector2 {
-    return new Vector2(1, 1);
-  }
-
-  /**
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
@@ -131,6 +158,8 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector2(3, 4);
@@ -146,6 +175,9 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @param other
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector2(3, 4);
@@ -162,6 +194,9 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @param other
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector2(3, 4);
@@ -178,6 +213,9 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @param scalar
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
@@ -192,6 +230,9 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * @param scalar
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
@@ -206,18 +247,24 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * calculates the length of this vector
+   * @returns the length of this vector (always non-negative)
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
-   * console.log(v.magnitude()); // 5
+   * console.log(v.length()); // 5
    * ```
    */
-  magnitude(): number {
+  length(): number {
     const {x, y} = this;
     return Math.sqrt(x ** 2 + y ** 2);
   }
 
   /**
+   * normalizes this vector to length 1
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector2(3, 4);
@@ -226,7 +273,7 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
    * ```
    */
   normalize(): Vector2 {
-    const length = this.magnitude();
+    const length = this.length();
     if (length <= 0) {
       return this;
     }
@@ -234,6 +281,10 @@ class Vector2 implements Vector<2>, Additive<Vector2>, Scalable<Vector2>, Clonab
   }
 
   /**
+   * rotate vector by given angle (in radians)
+   * @param radian angle in radians, measured counter-clockwise from the positive x-axis
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector2(1, 1);

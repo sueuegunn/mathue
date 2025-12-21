@@ -6,5 +6,6 @@
   "excludePrivate": true,
   "out": "docs",
   "disableSources": true,
-  "sort": ["source-order"]
+  "sort": ["source-order"],
+  "groupOrder": ["Properties", "Accessors", "Constructors", "Factory Methods", "Methods"]
 }

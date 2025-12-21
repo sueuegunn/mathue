@@ -2,10 +2,11 @@ import type { Vector } from "./Vector";
 import type { Additive } from "./Additive";
 import type { Scalable } from "./Scalable";
 import type { Clonable } from "./Clonable";
+import type { Normalizable } from "./Normalizable";
 
 const INDEX_X = 0;
 
-class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonable<Vector1> {
+class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Normalizable<Vector1>, Clonable<Vector1> {
   /**
    * @example
    * ```ts
@@ -58,6 +59,34 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns new zero vector instance
+   * @group Factory Methods
+   * 
+   * @example
+   * ```ts
+   * const v = Vector1.zero();
+   * console.log(v.x); // 0
+   * ```
+   */
+  static zero(): Vector1 {
+    return new Vector1(0);
+  }
+
+  /**
+   * @returns new one vector instance
+   * @group Factory Methods
+   * 
+   * @example
+   * ```ts
+   * const v = Vector1.one();
+   * console.log(v.x); // 1
+   * ```
+   */
+  static one(): Vector1 {
+    return new Vector1(1);
+  }
+
+  /**
    * @returns new cloned vector instance
    * 
    * @example
@@ -73,29 +102,19 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
-   * @returns new zero vector instance
+   * determines if this vector is the zero vector
+   * @returns `true` if this vector is exactly zero, `false` otherwise
    * 
    * @example
    * ```ts
-   * const v = Vector1.zero();
-   * console.log(v.x); // 0
+   * const zero = Vector1.zero();
+   * const one = Vector1.one();
+   * console.log(zero.isZero()); // true
+   * console.log(one.isZero()); // false
    * ```
    */
-  static zero(): Vector1 {
-    return new Vector1(0);
-  }
-
-  /**
-   * @returns new one vector instance
-   * 
-   * @example
-   * ```ts
-   * const v = Vector1.one();
-   * console.log(v.x); // 1
-   * ```
-   */
-  static one(): Vector1 {
-    return new Vector1(1);
+  isZero(): boolean {
+    return this.x === 0;
   }
 
   /**
@@ -195,6 +214,36 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
    */
   scalarDivide(scalar: number): Vector1 {
     this.x /= scalar;
+    return this;
+  }
+
+  /**
+   * calculates the length of this vector
+   * @returns the length of this vector (always non-negative)
+   * 
+   * @example
+   * ```ts
+   * const v = new Vector1(2);
+   * console.log(v.length()); // 2
+   * ```
+   */
+  length(): number {
+    return this.x;
+  }
+
+  /**
+   * normalizes this vector to length 1
+   * @returns this instance, for method chaining
+   * 
+   * @example
+   * ```ts
+   * const v = new Vector1(2);
+   * v.normalize();
+   * console.log(v.x); // 1
+   * ```
+   */
+  normalize(): Vector1 {
+    this.x = 1;
     return this;
   }
 }
