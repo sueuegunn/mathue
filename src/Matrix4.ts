@@ -65,7 +65,7 @@ class Matrix4 implements Matrix<4>, Additive<Matrix4>, Scalable<Matrix4>, Clonab
   }
 
   /**
-   * @returns cloned new instance
+   * @returns new cloned matrix instance
    * 
    * @example
    * ```ts

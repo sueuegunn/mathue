@@ -58,6 +58,8 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns new cloned vector instance
+   * 
    * @example
    * ```ts
    * const v = new Vector1(2);
@@ -71,6 +73,8 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns new zero vector instance
+   * 
    * @example
    * ```ts
    * const v = Vector1.zero();
@@ -82,6 +86,8 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns new one vector instance
+   * 
    * @example
    * ```ts
    * const v = Vector1.one();
@@ -93,6 +99,8 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector1(2);
@@ -106,6 +114,8 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector1(1);
@@ -121,6 +131,9 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @param other
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector1(2);
@@ -136,6 +149,9 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @param other
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v1 = new Vector1(2);
@@ -151,6 +167,9 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @param scalar
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector1(2);
@@ -164,6 +183,9 @@ class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Clonab
   }
 
   /**
+   * @param scalar
+   * @returns this instance, for method chaining
+   * 
    * @example
    * ```ts
    * const v = new Vector1(6);
