@@ -8,5 +8,8 @@
   "out": "docs",
   "disableSources": true,
   "sort": ["source-order"],
-  "groupOrder": ["Properties", "Accessors", "Constructors", "Factory Methods", "Methods"]
+  "groupOrder": ["Properties", "Accessors", "Constructors", "Factory Methods", "Methods"],
+  "githubPages": true,
+  "gitRevision": "master",
+  "gitRemote": "origin"
 }
