@@ -1,6 +1,7 @@
 {
   "theme": "default",
   "customCss": "./typedoc/custom.css",
+  "favicon": "./typedoc/favicon.ico",
   "entryPoints": ["src/index.ts"],
   "entryPointStrategy": "expand",
   "excludePrivate": true,

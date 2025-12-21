@@ -15,13 +15,12 @@ jobs:
         with: { node-version: 20 }
       - run: npm ci
       - run: npm run doc
-      - name: Copy favicon, config, hbs
+      - name: Copy favicon, config
         run: |
           mkdir -p docs/assets
           mkdir -p docs/layouts
           cp typedoc/favicon.ico docs/assets/ || true
           cp typedoc/_config.yaml docs/ || true
-          cp typedoc/defaults.hbs docs/layouts/ || true
       - uses: actions/upload-pages-artifact@v3
         with: { path: ./docs }
       - uses: actions/deploy-pages@v4
