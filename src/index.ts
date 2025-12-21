@@ -7,7 +7,6 @@ import type { Normalizable } from "./Normalizable";
 import type { Scalable } from "./Scalable";
 import type { Vector } from "./Vector";
 import { Matrix4 } from "./Matrix4";
-import { PolarCoordinate3 } from "./PolarCoordinate3";
 import { Quaternion } from "./Quaternion";
 import { Vector1 } from "./Vector1";
 import { Vector2 } from "./Vector2";
@@ -33,7 +32,6 @@ export type {
 
 export {
   Matrix4,
-  PolarCoordinate3,
   Quaternion,
   Vector1,
   Vector2,
