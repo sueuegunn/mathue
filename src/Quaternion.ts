@@ -171,7 +171,11 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
    * 
    * @example
    * ```ts
-   * 
+   * const q1 = new Quaternion(1, 2, 3, 4);
+   * const q2 = new Quaternion(5, 6, 7, 8);
+   * q1.set(q2);
+   * console.log(q1); // (5, 6, 7, 8)
+   * console.log(q2); // (5, 6, 7, 8)
    * ```
    */
   set(other: Quaternion): Quaternion {
