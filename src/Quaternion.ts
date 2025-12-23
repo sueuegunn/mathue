@@ -1,13 +1,13 @@
-import type { Additive } from "./Additive";
-import type { Clonable } from "./Clonable";
-import type { Multiplicative } from "./Multiplicative";
+import type { AdditiveGroup } from "./AdditiveGroup";
+import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import type { Scalable } from "./Scalable";
+import type { Clonable } from "./Clonable";
 import { Vector3 } from "./Vector3";
 
 /**
  * Represents a quaternion using Hamilton's notation: q = a + bi + cj + dk
  */
-class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multiplicative<Quaternion>, Scalable<Quaternion> {
+class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGroup<Quaternion>, Scalable<Quaternion>, Clonable<Quaternion> {
   private _a: number;
   private _b: number;
   private _c: number;
@@ -271,21 +271,7 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
     return this;
   }
 
-  /**
-   * Calculates inverse of this quaternion (mutates this)
-   * @returns this instance, for method chaining
-   * 
-   * @example
-   * ```ts
-   * const q = new Quaternion(1, 2, 3, 4);
-   * q.inverse();
-   * console.log(q); // (0.0333, -0.0667, -0.1, -0.1333)
-   * ```
-   */
-  inverse(): Quaternion {
-    const norm2 = this.squaredNorm();
-    return this.conjugate().scalarDivide(norm2);
-  }
+  
 
   /**
    * Adds other quaternion to this instance (mutates this)
@@ -358,6 +344,25 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
   }
 
   /**
+   * Calculates inverse of this quaternion (mutates this)
+   * @returns this instance, for method chaining
+   * 
+   * @example
+   * ```ts
+   * const q = new Quaternion(1, 2, 3, 4);
+   * q.inverse();
+   * console.log(q); // (0.0333, -0.0667, -0.1, -0.1333)
+   * ```
+   */
+  invert(): Quaternion | null {
+    const norm2 = this.squaredNorm();
+    if (norm2 <= 0) {
+      return null;
+    }
+    return this.conjugate().scalarDivide(norm2);
+  }
+
+  /**
    * Divides this instance by other quaternion (mutates this)
    * @param other other quaternion
    * @returns this instance, for method chaining
@@ -371,9 +376,12 @@ class Quaternion implements Clonable<Quaternion>, Additive<Quaternion>, Multipli
    * console.log(q2); // (5, 6, 7, 8)
    * ```
    */
-  divide(other: Quaternion): Quaternion {
+  divide(other: Quaternion): Quaternion | null {
     const {temporary} = Quaternion;
-    temporary.set(other).inverse();
+    temporary.set(other);
+    if (!temporary.invert()) {
+      return null;
+    }
     return this.multiply(temporary);
   }
 

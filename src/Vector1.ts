@@ -1,12 +1,12 @@
 import type { Vector } from "./Vector";
-import type { Additive } from "./Additive";
+import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Scalable } from "./Scalable";
-import type { Clonable } from "./Clonable";
 import type { Normalizable } from "./Normalizable";
+import type { Clonable } from "./Clonable";
 
 const INDEX_X = 0;
 
-class Vector1 implements Vector<1>, Additive<Vector1>, Scalable<Vector1>, Normalizable<Vector1>, Clonable<Vector1> {
+class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, Normalizable<Vector1>, Clonable<Vector1> {
   /**
    * @example
    * ```ts
