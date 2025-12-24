@@ -1,8 +1,8 @@
-import type {LengthOfMatrix, MatrixRank, TupleOf} from './types';
+import type {LengthOfMatrix, MatrixOrder, TupleOf} from './types';
 
-interface Matrix<R extends MatrixRank> {
-  readonly rank: R;
-  readonly elements: TupleOf<number, LengthOfMatrix<R>>;
+interface Matrix<Order extends MatrixOrder> {
+  readonly order: Order;
+  readonly elements: TupleOf<number, LengthOfMatrix<Order>>;
 }
 
 export type {Matrix};

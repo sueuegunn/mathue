@@ -223,7 +223,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    * console.log(v); // (6, 8)
    * ```
    */
-  scalarMultiply(scalar: number): Vector2 {
+  multiplyScalar(scalar: number): Vector2 {
     this.x *= scalar;
     this.y *= scalar;
     return this;
@@ -240,7 +240,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    * console.log(v); // (1.5, 2)
    * ```
    */
-  scalarDivide(scalar: number): Vector2 {
+  divideScalar(scalar: number): Vector2 {
     this.x /= scalar;
     this.y /= scalar;
     return this;
@@ -277,7 +277,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
     if (length <= 0) {
       return this;
     }
-    return this.scalarDivide(length);
+    return this.divideScalar(length);
   }
 
   /**

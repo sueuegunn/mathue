@@ -248,11 +248,11 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * @example
    * ```ts
    * const v = new Vector3(4, 5, 6);
-   * v.scalarMultiply(2);
+   * v.multiplyScalar(2);
    * console.log(v); // (8, 10, 12)
    * ```
    */
-  scalarMultiply(scalar: number): Vector3 {
+  multiplyScalar(scalar: number): Vector3 {
     this.x *= scalar;
     this.y *= scalar;
     this.z *= scalar;
@@ -266,11 +266,11 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * @example
    * ```ts
    * const v = new Vector3(4, 5, 6);
-   * v.scalarDivide(2);
+   * v.divideScalar(2);
    * console.log(v); // (2, 2.5, 3)
    * ```
    */
-  scalarDivide(scalar: number): Vector3 {
+  divideScalar(scalar: number): Vector3 {
     this.x /= scalar;
     this.y /= scalar;
     this.z /= scalar;
@@ -308,7 +308,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
     if (length <= 0) {
       return this;
     }
-    return this.scalarDivide(length);
+    return this.divideScalar(length);
   }
 
   /**
@@ -332,17 +332,18 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * console.log(out); // (0, 0, 1)
    * ``` 
    */
-  cross(other: Vector3, out?: Vector3): Vector3 {
+  cross(other: Vector3): Vector3 {
     const {x: tx, y: ty, z: tz} = this;
     const {x: ox, y: oy, z: oz} = other;
     const x = ty * oz - tz * oy;
     const y = tz * ox - tx * oz;
     const z = tx * oy - ty * ox;
-    if (out) {
-      out.setValues(x, y, z);
-      return out;
-    }
-    return new Vector3(x, y, z);
+    return this.setValues(x, y, z);
+  }
+
+  crossTo(other: Vector3, out: Vector3): Vector3 {
+    out.set(this);
+    return out.cross(other);
   }
 }
 

@@ -359,7 +359,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
     if (norm2 <= 0) {
       return null;
     }
-    return this.conjugate().scalarDivide(norm2);
+    return this.conjugate().divideScalar(norm2);
   }
 
   /**
@@ -397,7 +397,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * console.log(q); // (2, 4, 6, 8)
    * ```
    */
-  scalarMultiply(scalar: number): Quaternion {
+  multiplyScalar(scalar: number): Quaternion {
     this._a *= scalar;
     this._b *= scalar;
     this._c *= scalar;
@@ -417,7 +417,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * console.log(q); // (1, 2, 3, 4)
    * ```
    */
-  scalarDivide(scalar: number): Quaternion {
+  divideScalar(scalar: number): Quaternion {
     this._a /= scalar;
     this._b /= scalar;
     this._c /= scalar;

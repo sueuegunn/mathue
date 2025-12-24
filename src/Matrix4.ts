@@ -15,10 +15,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @example
    * ```ts
    * const m = Matrix4.identity();
-   * console.log(m.rank); // 4
+   * console.log(m.order); // 4
    * ```
    */
-  readonly rank = 4;
+  readonly order = 4;
 
   /**
    * @example
@@ -278,8 +278,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```
    */
   add(other: Matrix4): Matrix4 {
-    const {rank} = this;
-    for (const index of range(rank ** 2)) {
+    const {order} = this;
+    for (const index of range(order ** 2)) {
       this.elements[index] += other.elements[index];
     }
     return this;
@@ -302,8 +302,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```
    */
   subtract(other: Matrix4): Matrix4 {
-    const {rank} = this;
-    for (const index of range(rank ** 2)) {
+    const {order} = this;
+    for (const index of range(order ** 2)) {
       this.elements[index] -= other.elements[index];
     }
     return this;
@@ -324,9 +324,9 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   0, 0, 0, 2 ]
    * ```
    */
-  scalarMultiply(scalar: number): Matrix4 {
-    const {rank} = this;
-    for (const index of range(rank ** 2)) {
+  multiplyScalar(scalar: number): Matrix4 {
+    const {order} = this;
+    for (const index of range(order ** 2)) {
       this.elements[index] *= scalar;
     }
     return this;
@@ -347,9 +347,9 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //     0,   0,   0, 0.5 ]
    * ```
    */
-  scalarDivide(scalar: number): Matrix4 {
-    const {rank} = this;
-    for (const index of range(rank ** 2)) {
+  divideScalar(scalar: number): Matrix4 {
+    const {order} = this;
+    for (const index of range(order ** 2)) {
       this.elements[index] /= scalar;
     }
     return this;
@@ -515,11 +515,11 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```
    */
   scale(scale: Vector3): Matrix4 {
-    const {rank} = this;
-    for (const row of range(rank)) {
+    const {order} = this;
+    for (const row of range(order)) {
       const scalar = this.indexToScalar(row, scale);
-      for (const column of range(rank)) {
-        const index = row * rank + column;
+      for (const column of range(order)) {
+        const index = row * order + column;
         this.elements[index] *= scalar;
       }
     }

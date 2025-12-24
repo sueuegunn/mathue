@@ -1,4 +1,4 @@
-import type { Dimension, LengthOfMatrix, MatrixRank, TupleOf } from "./types";
+import type { VectorDimension, LengthOfMatrix, MatrixOrder, TupleOf } from "./types";
 import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Clonable } from "./Clonable";
 import type { Matrix } from "./Matrix";
@@ -16,9 +16,9 @@ import { Vector4 } from "./Vector4";
 
 // types
 export type {
-  Dimension,
+  VectorDimension,
   LengthOfMatrix,
-  MatrixRank,
+  MatrixOrder,
   TupleOf,
 };
 

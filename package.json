@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "main": "src/index.ts",
-  "repository": { "url": "https://github.com/sueuegunn/mathue"},
+  "repository": {
+    "url": "https://github.com/sueuegunn/mathue"
+  },
   "homepage": "https://sueuegunn.github.io/mathue",
   "scripts": {
     "dev": "vite",
@@ -14,6 +16,7 @@
     "doc": "typedoc"
   },
   "devDependencies": {
+    "@hyperse/vitest-coverage-reporter": "^1.0.16",
     "@types/node": "^24.9.2",
     "@vitest/coverage-v8": "^4.0.6",
     "typedoc": "^0.28.15",

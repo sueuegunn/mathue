@@ -1,6 +1,6 @@
 interface Scalable<T> {
-  scalarMultiply(scalar: number): T;
-  scalarDivide(scalar: number): T;
+  multiplyScalar(scalar: number): T;
+  divideScalar(scalar: number): T;
 }
 
 export type {Scalable};

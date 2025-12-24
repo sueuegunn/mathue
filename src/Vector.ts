@@ -1,6 +1,6 @@
-import type { Dimension, TupleOf } from "./types";
+import type { VectorDimension, TupleOf } from "./types";
 
-interface Vector<D extends Dimension> {
+interface Vector<D extends VectorDimension> {
   readonly dimension: D;
   readonly elements: TupleOf<number, D>;
 }

@@ -3,6 +3,8 @@
 </p>
 <h1 align="center">mathue</h1>
 
+![Lines Coverage](https://raw.githubusercontent.com/sueuegunn/mathue/master/badges/lines.svg)
+
 ### TypeScript math library
 
 A library featuring Vector, Matrix and Quaternion classes, specially optimized for WebGL applications.

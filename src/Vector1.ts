@@ -196,7 +196,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * console.log(v.x); // 6
    * ```
    */
-  scalarMultiply(scalar: number): Vector1 {
+  multiplyScalar(scalar: number): Vector1 {
     this.x *= scalar;
     return this;
   }
@@ -212,7 +212,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * console.log(v.x); // 3
    * ```
    */
-  scalarDivide(scalar: number): Vector1 {
+  divideScalar(scalar: number): Vector1 {
     this.x /= scalar;
     return this;
   }
@@ -228,7 +228,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * ```
    */
   length(): number {
-    return this.x;
+    return Math.abs(this.x);
   }
 
   /**

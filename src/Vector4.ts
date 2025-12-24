@@ -277,7 +277,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * console.log(v); // (0, 2, 4, 6)
    * ```
    */
-  scalarMultiply(scalar: number): Vector4 {
+  multiplyScalar(scalar: number): Vector4 {
     this.x *= scalar;
     this.y *= scalar;
     this.z *= scalar;
@@ -296,7 +296,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * console.log(v); // (0, 0.5, 1, 1.5)
    * ```
    */
-  scalarDivide(scalar: number): Vector4 {
+  divideScalar(scalar: number): Vector4 {
     this.x /= scalar;
     this.y /= scalar;
     this.z /= scalar;
@@ -335,7 +335,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
     if (length <= 0) {
       return this;
     }
-    return this.scalarDivide(length);
+    return this.divideScalar(length);
   }
 }
 
