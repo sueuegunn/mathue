@@ -9,7 +9,7 @@ jobs:
         with: { node-version: 20 }
       - run: npm ci
       - run: npm run test
-      - uses: hyperse-io/vitest-coverage-reporter@main
+      - uses: hyperse-io/vitest-coverage-reporter@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           coverage-path: ./coverage/coverage-final.json
