@@ -2,7 +2,7 @@ import type { Matrix } from "./Matrix";
 import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Scalable } from "./Scalable";
 import type { Clonable } from "./Clonable";
-import { range } from "./function";
+import { range } from "./functions";
 import type { Quaternion } from "./Quaternion";
 import type { TupleOf } from "./types";
 import { Vector3 } from "./Vector3";
