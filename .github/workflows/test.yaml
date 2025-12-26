@@ -16,21 +16,23 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
-          cp coverage/coverage-summary.json gist-content.json
+          ESCAPED_CONTENT=$(jq -Rs . < coverage/coverage-summary.json)
 
-          cat gist-content.json
-          
+          printf '{
+            "files": {
+              "coverage-summary.json": {
+                "content": %s
+              }
+            }
+          }' "$ESCAPED_CONTENT" > payload.json
+
+          cat payload.json
+
           curl -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
             -H "Content-Type: application/json" \
-            https://api.github.com/gists/$GIST_ID \
-            -d '{
-              "files": {
-                "coverage-summary.json": {
-                  "content": "'"$(cat gist-content.json | jq -c .)"'"
-                }
-              }
-            }'
+            --data-binary @payload.json \
+            https://api.github.com/gists/$GIST_ID
           
-          rm gist-content.json
+          rm payload.json
             
