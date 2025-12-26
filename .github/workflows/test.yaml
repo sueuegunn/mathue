@@ -16,11 +16,31 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
-          ESCAPED_CONTENT=$(jq -Rs . < coverage/coverage-summary.json)
+          LINES_PCT=$(jq -r '.total.lines.pct' coverage/coverage-summary.json)
+
+          COLOR="yellow"
+          if (( $(echo "$LINES_PCT >= 90" | bc -l) )); then
+            COLOR="brightgreen"
+          fi
+
+          MESSAGE=$(printf "%.2f%%" $LINES_PCT)
+
+          cat > badge.json << EOF
+          {
+            "schemaVersion": 1,
+            "label": "Coverage",
+            "message": "$MESSAGE",
+            "color": "$COLOR"
+          }
+          EOF
+
+          cat badge.json
+
+          ESCAPED_CONTENT=$(jq -Rs . < badge.json)
 
           printf '{
             "files": {
-              "coverage-summary.json": {
+              "badge.json": {
                 "content": %s
               }
             }
@@ -35,4 +55,5 @@ jobs:
             https://api.github.com/gists/$GIST_ID
           
           rm payload.json
+          rm badge.json
             
