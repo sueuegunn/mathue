@@ -19,6 +19,7 @@ jobs:
           cd coverage
           SUMMARY_JSON=$(jq '{lines: .total.lines.pct, branches: .total.branches.pct}' coverage-summary.json)
           echo "$SUMMARY_JSON" > coverage-summary.json
+          cat coverage-summary.json
           
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
