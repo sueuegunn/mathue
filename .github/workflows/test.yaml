@@ -1,7 +1,9 @@
 name: Test
 on: [push]
+permissions:
+  contents: write
 jobs:
-  coverage:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
