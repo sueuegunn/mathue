@@ -17,6 +17,8 @@ jobs:
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
           cp coverage/coverage-summary.json gist-content.json
+
+          cat gist-content.json
           
           curl -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
