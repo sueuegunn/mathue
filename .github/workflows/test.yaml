@@ -28,7 +28,7 @@ jobs:
             -d "{
               \"files\": {
                 \"coverage-summary.json\": {
-                  \"content\": $(echo $SUMMARY_JSON | jq -c .)
+                  \"content\": \"$(echo $SUMMARY_JSON | jq -c .)\"
                 }
               }
             }"
