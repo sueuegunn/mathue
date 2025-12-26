@@ -16,7 +16,6 @@
     "doc": "typedoc"
   },
   "devDependencies": {
-    "@hyperse/vitest-coverage-reporter": "^1.0.16",
     "@types/node": "^24.9.2",
     "@vitest/coverage-v8": "^4.0.6",
     "typedoc": "^0.28.15",
@@ -26,9 +25,5 @@
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
-  },
-  "dependencies": {
-    "@types/gl-matrix": "^2.4.5",
-    "gl-matrix": "^3.4.4"
   }
 }
