@@ -4,7 +4,7 @@
 <h1 align="center">mathue</h1>
 
 [![Test](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml/badge.svg?event=push)](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml)
-[![Coverage](https://img.shields.io/badge/dynamic/json?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/coverage-summary.json&query=$.total.lines.pct&suffix=%&label=Coverage&color=brightgreen)]
+![Coverage](https://img.shields.io/badge/dynamic/json?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/coverage-summary.json&query=$.total.lines.pct&suffix=%&label=Coverage&color=brightgreen)
 
 ### TypeScript math library
 
