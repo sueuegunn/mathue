@@ -34,8 +34,6 @@ jobs:
           }
           EOF
 
-          cat badge.json
-
           ESCAPED_CONTENT=$(jq -Rs . < badge.json)
 
           printf '{
@@ -45,8 +43,6 @@ jobs:
               }
             }
           }' "$ESCAPED_CONTENT" > payload.json
-
-          cat payload.json
 
           curl -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
