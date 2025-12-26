@@ -9,7 +9,23 @@ jobs:
         with: { node-version: 20 }
       - run: npm ci
       - run: npm run test
-      - uses: hyperse-io/vitest-coverage-reporter@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          coverage-path: ./coverage/coverage-final.json
+      - name: Upload coverage to Gist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+        run: |
+          cd coverage
+          SUMMARY_JSON=$(jq '{lines: .total.lines.pct, branches: .total.branches.pct}' coverage-summary.json)
+          echo "$SUMMARY_JSON" > coverage-summary.json
+          
+          curl -X PATCH \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/gists/$GIST_ID \
+            -d "{
+              \"files\": {
+                \"coverage-summary.json\": {
+                  \"content\": $(echo $SUMMARY_JSON | jq -c .)
+                }
+              }
+            }"
