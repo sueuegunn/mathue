@@ -20,15 +20,24 @@ jobs:
           SUMMARY_JSON=$(jq '{lines: .total.lines.pct, branches: .total.branches.pct}' coverage-summary.json)
           echo "$SUMMARY_JSON" > coverage-summary.json
           cat coverage-summary.json
+
+          COVERAGE_JSON=$(cat coverage-summary.json | jq -c .)
+
+          cat > payload.json << EOF
+          {
+            "files": {
+              "coverage-summary.json": {
+                "content": $COVERAGE_JSON
+              }
+            }
+          }
+          EOF
           
           curl -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
             -H "Content-Type: application/json" \
-            https://api.github.com/gists/$GIST_ID \
-            -d "{
-              \"files\": {
-                \"coverage-summary.json\": {
-                  \"content\": \"$(echo $SUMMARY_JSON | jq -c .)\"
-                }
-              }
-            }"
+            --data-binary @payload.json \
+            https://api.github.com/gists/$GIST_ID
+          
+          rm payload.json
+            
