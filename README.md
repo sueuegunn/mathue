@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">mathue</h1>
 
-![Lines Coverage](https://raw.githubusercontent.com/sueuegunn/mathue/master/badges/lines.svg)
+[![Coverage Badge](https://github.com/sueuegunn/mathue/actions/workflows/coverage.yaml/badge.svg?event=push)](https://github.com/sueuegunn/mathue/actions/workflows/coverage.yaml)
 
 ### TypeScript math library
 
