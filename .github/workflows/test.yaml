@@ -44,7 +44,7 @@ jobs:
             }
           }' "$ESCAPED_CONTENT" > payload.json
 
-          curl -X PATCH \
+          curl -s -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
             -H "Content-Type: application/json" \
             --data-binary @payload.json \
