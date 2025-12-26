@@ -1,4 +1,4 @@
-name: Coverage Badge
+name: Test
 on: [push]
 jobs:
   coverage:
