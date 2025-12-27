@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'vitest';
-import {Quaternion} from '../../src/Quaternion';
+import {Quaternion} from '../src/Quaternion';
 
 describe('Quaternion', () => {
   it('gets a', () => {

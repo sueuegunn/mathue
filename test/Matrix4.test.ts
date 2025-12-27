@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import {Matrix4} from '../../src/Matrix4';
-import { Vector3 } from "../../src/Vector3";
+import {Matrix4} from '../src/Matrix4';
+import { Vector3 } from "../src/Vector3";
 
 describe('Matrix4', () => {
   it('identity()', () => {

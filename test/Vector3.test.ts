@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {Vector3} from '../../src/Vector3';
+import {Vector3} from '../src/Vector3';
 
 describe('Vector3', () => {
   it('gets x', () => {

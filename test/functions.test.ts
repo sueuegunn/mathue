@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {range, sum, sumMap} from '../../src/functions';
+import {range, sum, sumMap} from '../src/functions';
 
 describe('functions', () => {
   describe('range()', () => {
