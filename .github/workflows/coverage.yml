@@ -1,0 +1,58 @@
+name: Coverage
+on:
+  push:
+    branches:
+      - master
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run test:cov
+      - name: Upload coverage to Gist
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+        run: |
+          LINES_PCT=$(jq -r '.total.lines.pct' coverage/coverage-summary.json)
+
+          COLOR="yellow"
+          if (( $(echo "$LINES_PCT >= 90" | bc -l) )); then
+            COLOR="brightgreen"
+          fi
+
+          MESSAGE=$(printf "%.2f%%" $LINES_PCT)
+
+          cat > badge.json << EOF
+          {
+            "schemaVersion": 1,
+            "label": "Coverage",
+            "message": "$MESSAGE",
+            "color": "$COLOR"
+          }
+          EOF
+
+          ESCAPED_CONTENT=$(jq -Rs . < badge.json)
+
+          printf '{
+            "files": {
+              "badge.json": {
+                "content": %s
+              }
+            }
+          }' "$ESCAPED_CONTENT" > payload.json
+
+          curl -s -X PATCH \
+            -H "Authorization: token $GIST_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data-binary @payload.json \
+            https://api.github.com/gists/$GIST_ID
+          
+          rm payload.json
+          rm badge.json
+            
