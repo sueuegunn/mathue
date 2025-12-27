@@ -3,6 +3,8 @@ import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Scalable } from "./Scalable";
 import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
+import { Matrix4 } from "./Matrix4";
+import type { Quaternion } from "./Quaternion";
 
 const INDEX_X = 0;
 
@@ -24,6 +26,14 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * ```
    */
   readonly elements: [number];
+
+  private static _tmpMatrix?: Matrix4;
+  private static get tmpMatrix(): Matrix4 {
+    if (!this._tmpMatrix) {
+      this._tmpMatrix = Matrix4.identity();
+    }
+    return this._tmpMatrix;
+  }
 
   /**
    * @example
@@ -208,7 +218,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * @example
    * ```ts
    * const v = new Vector1(6);
-   * v.scalarDivide(2);
+   * v.divideScalar(2);
    * console.log(v.x); // 3
    * ```
    */
@@ -237,13 +247,29 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * 
    * @example
    * ```ts
-   * const v = new Vector1(2);
+   * const v = new Vector1(-2);
    * v.normalize();
-   * console.log(v.x); // 1
+   * console.log(v.x); // -1
    * ```
    */
   normalize(): Vector1 {
-    this.x = 1;
+    this.x /= this.length();
+    return this;
+  }
+
+  applyMatrix4(matrix: Matrix4): Vector1 {
+    const {tmpMatrix} = Vector1;
+    tmpMatrix.set(matrix);
+    const {x} = tmpMatrix._applyVector(this.x, 0, 0, 0);
+    this.setValue(x);
+    return this;
+  }
+
+  applyQuaternion(quaternion: Quaternion): Vector1 {
+    const {tmpMatrix} = Vector1;
+    tmpMatrix.setQuaternion(quaternion);
+    const {x} = tmpMatrix._applyVector(this.x, 0, 0, 0);
+    this.setValue(x);
     return this;
   }
 }

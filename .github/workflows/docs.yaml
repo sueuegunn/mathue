@@ -1,7 +1,7 @@
-name: Deploy Docs
+name: Docs
 on: [push]
 jobs:
-  deploy:
+  docs:
     permissions:
       id-token: write
       pages: write
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm ci
-      - run: npm run doc
+      - run: npm run docs
       - name: Copy favicon, config
         run: |
           mkdir -p docs/assets

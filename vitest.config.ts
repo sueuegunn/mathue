@@ -5,5 +5,6 @@ export default defineConfig({
     coverage: {
       reporter: ['json-summary', 'text'],
     },
+    fileParallelism: false,
   },
 });

@@ -27,7 +27,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * const q = new Quaternion(1, 0, 0, 0);
    * ```
    */
-  private constructor(a: number, b: number, c: number, d: number) {
+  constructor(a: number, b: number, c: number, d: number) {
     this._a = a;
     this._b = b;
     this._c = c;
@@ -107,7 +107,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
 
   /**
    * @param axis the rotation axis
-   * @param radian the rotation angle in radians
+   * @param angle the rotation angle in radians
    * @returns new normalized quaternion instance from axis and radian
    * 
    * @group Factory Methods
@@ -119,9 +119,9 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * const q = Quaternion.identity(axis, radian);
    * ```
    */
-  static fromAxisAndRadian(axis: Vector3, radian: number): Quaternion {
+  static fromAxisAndAngle(axis: Vector3, angle: number): Quaternion {
     const quaternion = Quaternion.identity();
-    quaternion.setAxisAndRadian(axis, radian);
+    quaternion.setAxisAndRadian(axis, angle);
     return quaternion;
   }
 
@@ -215,7 +215,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
 
   setAxisAndRadian(axis: Vector3, radian: number): void {
     if (axis.isZero()) {
-      this.setIdentity();
+      return this.setIdentity();
     }
 
     axis.normalize();
@@ -270,8 +270,6 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
     this._d *= -1;
     return this;
   }
-
-  
 
   /**
    * Adds other quaternion to this instance (mutates this)
@@ -413,7 +411,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * @example
    * ```ts
    * const q = new Quaternion(2, 4, 6, 8);
-   * q.scalarDivide(2);
+   * q.divideScalar(2);
    * console.log(q); // (1, 2, 3, 4)
    * ```
    */

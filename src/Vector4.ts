@@ -3,6 +3,8 @@ import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Scalable } from "./Scalable";
 import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
+import { Matrix4 } from "./Matrix4";
+import type { Quaternion } from "./Quaternion";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
@@ -27,6 +29,14 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * ```
    */
   readonly elements: [number, number, number, number];
+
+  private static _tmpMatrix?: Matrix4;
+  private static get tmpMatrix(): Matrix4 {
+    if (!this._tmpMatrix) {
+      this._tmpMatrix = Matrix4.identity();
+    }
+    return this._tmpMatrix;
+  }
 
   /**
    * @example
@@ -272,8 +282,8 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * 
    * @example
    * ```ts
-   * const v new Vector4(0, 1, 2, 3);
-   * v.scalarMultiply(2);
+   * const v = new Vector4(0, 1, 2, 3);
+   * v.multiplyScalar(2);
    * console.log(v); // (0, 2, 4, 6)
    * ```
    */
@@ -291,8 +301,8 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * 
    * @example
    * ```ts
-   * const v new Vector4(0, 1, 2, 3);
-   * v.scalarDivide(2);
+   * const v = new Vector4(0, 1, 2, 3);
+   * v.divideScalar(2);
    * console.log(v); // (0, 0.5, 1, 1.5)
    * ```
    */
@@ -336,6 +346,24 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
       return this;
     }
     return this.divideScalar(length);
+  }
+
+  applyMatrix4(matrix: Matrix4): Vector4 {
+    const {tmpMatrix} = Vector4;
+    tmpMatrix.set(matrix);
+    const {x, y, z, w} = this;
+    const tmpVector = tmpMatrix._applyVector(x, y, z, w);
+    this.set(tmpVector);
+    return this;
+  }
+
+  applyQuaternion(quaternion: Quaternion): Vector4 {
+    const {tmpMatrix} = Vector4;
+    tmpMatrix.setQuaternion(quaternion);
+    const {x, y, z, w} = this;
+    const tmpVector = tmpMatrix._applyVector(x, y, z, w);
+    this.set(tmpVector);
+    return this;
   }
 }
 

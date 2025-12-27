@@ -7,6 +7,7 @@ import type { Quaternion } from "./Quaternion";
 import type { TupleOf } from "./types";
 import { Vector3 } from "./Vector3";
 import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
+import { Vector4 } from "./Vector4";
 
 const EPSILON = 0.0001;
 
@@ -33,7 +34,21 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   readonly elements: TupleOf<number, 16>;
 
-  private static temporary = Matrix4.identity();
+  private static _tmpMatrix?: Matrix4;
+  private static get tmpMatrix(): Matrix4 {
+    if (!this._tmpMatrix) {
+      this._tmpMatrix = Matrix4.identity();
+    }
+    return this._tmpMatrix;
+  }
+
+  private static _tmpVector?: Vector4;
+  private static get tmpVector(): Vector4 {
+    if (!this._tmpVector) {
+      this._tmpVector = Vector4.zero();
+    }
+    return this._tmpVector;
+  }
 
   /**
    * @example
@@ -65,25 +80,6 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     e33: number,
   ) {
     this.elements = [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33];
-  }
-
-  /**
-   * @returns new cloned matrix instance
-   * 
-   * @example
-   * ```ts
-   * const m = Matrix4.identity();
-   * const c = m.clone();
-   * console.log(c.elements);
-   * // [ 1, 0, 0, 0,
-   * //   0, 1, 0, 0,
-   * //   0, 0, 1, 0,
-   * //   0, 0, 0, 1 ]
-   * ```
-   */
-  clone(): Matrix4 {
-    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
-    return new Matrix4(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33);
   }
 
   /**
@@ -121,6 +117,25 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   static zero(): Matrix4 {
     return new Matrix4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
+
+  /**
+   * @returns new cloned matrix instance
+   * 
+   * @example
+   * ```ts
+   * const m = Matrix4.identity();
+   * const c = m.clone();
+   * console.log(c.elements);
+   * // [ 1, 0, 0, 0,
+   * //   0, 1, 0, 0,
+   * //   0, 0, 1, 0,
+   * //   0, 0, 0, 1 ]
+   * ```
+   */
+  clone(): Matrix4 {
+    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
+    return new Matrix4(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33);
   }
 
   /**
@@ -339,7 +354,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @example
    * ```ts
    * const m = Matrix4.identity();
-   * m.scalarDivide(2);
+   * m.divideScalar(2);
    * console.log(m.elements);
    * // [ 0.5,   0,   0,   0,
    * //     0, 0.5,   0,   0,
@@ -476,7 +491,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @returns `this` instance for method chaining if other is invertible, `null` otherwise
    */
   divide(other: Matrix4): Matrix4 | null {
-    const {temporary} = Matrix4;
+    const {tmpMatrix: temporary} = Matrix4;
     temporary.set(other);
     if (!temporary.invert()) {
       return null;
@@ -644,6 +659,21 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     }
 
     return this;
+  }
+
+  /** @ignore */
+  _applyVector(x: number, y: number, z: number, w: number): Vector4 {
+    const {tmpVector} = Matrix4;
+    tmpVector.setValues(x, y, z, w);
+
+    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
+    const xOut = e00 * x + e01 * y + e02 * z + e03 * w;
+    const yOut = e10 * x + e11 * y + e12 * z + e13 * w;
+    const zOut = e20 * x + e21 * y + e22 * z + e23 * w;
+    const wOut = e30 * x + e31 * y + e32 * z + e33 * w;
+    tmpVector.setValues(xOut, yOut, zOut, wOut);
+
+    return tmpVector;
   }
 }
 

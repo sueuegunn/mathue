@@ -20,8 +20,8 @@ import {Vector3, Matrix4, Quaternion} from 'mathue';
 const v = new Vector3(1, 2, 3);
 
 const axis = new Vector3(0, 0, 1);
-const radian = Math.PI / 3;
-const q = Quaternion.fromAxisAndRadian(axis, radian);
+const angle = Math.PI / 3;
+const q = Quaternion.fromAxisAndAngle(axis, angle);
 
 const m = Matrix4.identity();
 m.setQuaternion(q);

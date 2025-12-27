@@ -3,6 +3,8 @@ import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Scalable } from "./Scalable";
 import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
+import { Matrix4 } from "./Matrix4";
+import type { Quaternion } from "./Quaternion";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
@@ -26,6 +28,14 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * ```
    */
   readonly elements: [number, number, number];
+
+  private static _tmpMatrix?: Matrix4
+  private static get tmpMatrix(): Matrix4 {
+    if (!this._tmpMatrix) {
+      this._tmpMatrix = Matrix4.identity();
+    }
+    return this._tmpMatrix;
+  }
 
   /**
    * @example
@@ -312,10 +322,9 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * calculates the cross product of this and other
+   * calculates the cross product of this and other (mutates this)
    * @param other 
-   * @param out optional output vector. if provided, result is stored here
-   * @returns `out` if out provided, new cross product vector otherwise
+   * @returns this instance, for method chaining
    * 
    * @example
    * ```ts
@@ -344,6 +353,22 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   crossTo(other: Vector3, out: Vector3): Vector3 {
     out.set(this);
     return out.cross(other);
+  }
+
+  applyMatrix4(matrix: Matrix4): Vector3 {
+    const {tmpMatrix} = Vector3;
+    tmpMatrix.set(matrix);
+    const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
+    this.setValues(x, y, z);
+    return this;
+  }
+
+  applyQuaternion(quaternion: Quaternion): Vector3 {
+    const {tmpMatrix} = Vector3;
+    tmpMatrix.setQuaternion(quaternion);
+    const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
+    this.setValues(x, y, z);
+    return this;
   }
 }
 
