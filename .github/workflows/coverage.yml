@@ -31,7 +31,7 @@ jobs:
           cat > badge.json << EOF
           {
             "schemaVersion": 1,
-            "label": "Coverage",
+            "label": "Line coverage",
             "message": "$MESSAGE",
             "color": "$COLOR"
           }
