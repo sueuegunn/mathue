@@ -1,16 +1,24 @@
 {
   "name": "mathue",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "main": "dist/mathue.js",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/mathue.js",
+      "require": "./dist/mathue.cjs"
+    }
+  },
   "repository": {
     "url": "https://github.com/sueuegunn/mathue"
   },
   "homepage": "https://sueuegunn.github.io/mathue",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -22,6 +30,7 @@
     "typedoc": "^0.28.15",
     "typescript": "~5.9.3",
     "vite": "npm:rolldown-vite@7.1.14",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.6"
   },
   "overrides": {
