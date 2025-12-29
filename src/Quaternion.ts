@@ -121,7 +121,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    */
   static fromAxisAndAngle(axis: Vector3, angle: number): Quaternion {
     const quaternion = Quaternion.identity();
-    quaternion.setAxisAndRadian(axis, angle);
+    quaternion.setAxisAndAngle(axis, angle);
     return quaternion;
   }
 
@@ -201,7 +201,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
   /**
    * Sets this quaternion from axis and radian (mutates this)
    * @param axis the rotation axis
-   * @param radian the rotation angle in radians
+   * @param angle the rotation angle in radians
    * @returns this instance, for method chaining
    * 
    * @example
@@ -209,19 +209,19 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * const q = Quaternion.identity();
    * const axis = new Vector3(0, 1, 0);
    * const radian = Math.PI / 3;
-   * q.setAxisAndRadian(axis, radian);
+   * q.setAxisAndAngle(axis, radian);
    * ```
    */
 
-  setAxisAndRadian(axis: Vector3, radian: number): void {
+  setAxisAndAngle(axis: Vector3, angle: number): void {
     if (axis.isZero()) {
       return this.setIdentity();
     }
 
     axis.normalize();
     const {x, y, z} = axis;
-    const sin = Math.sin(radian / 2);
-    this.setValues(Math.cos(radian / 2), x * sin, y * sin, z * sin);
+    const sin = Math.sin(angle / 2);
+    this.setValues(Math.cos(angle / 2), x * sin, y * sin, z * sin);
   }
 
   /**
@@ -438,7 +438,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
   rotateX(radian: number): Quaternion {
     const {temporary} = Quaternion;
     temporary.setIdentity();
-    temporary.setAxisAndRadian(new Vector3(1, 0, 0), radian);
+    temporary.setAxisAndAngle(new Vector3(1, 0, 0), radian);
     return this.multiply(temporary);
   }
 
@@ -457,7 +457,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
   rotateY(radian: number): Quaternion {
     const {temporary} = Quaternion;
     temporary.setIdentity();
-    temporary.setAxisAndRadian(new Vector3(0, 1, 0), radian);
+    temporary.setAxisAndAngle(new Vector3(0, 1, 0), radian);
     return this.multiply(temporary);
   }
 
@@ -476,7 +476,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
   rotateZ(radian: number): Quaternion {
     const {temporary} = Quaternion;
     temporary.setIdentity();
-    temporary.setAxisAndRadian(new Vector3(0, 0, 1), radian);
+    temporary.setAxisAndAngle(new Vector3(0, 0, 1), radian);
     return this.multiply(temporary);
   }
 }
