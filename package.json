@@ -1,5 +1,6 @@
 {
   "name": "mathue",
+
   "version": "0.0.0",
   "type": "module",
   "types": "dist/index.d.ts",
@@ -12,10 +13,27 @@
       "require": "./dist/mathue.cjs"
     }
   },
+
+  "homepage": "https://sueuegunn.github.io/mathue",
   "repository": {
     "url": "https://github.com/sueuegunn/mathue"
   },
-  "homepage": "https://sueuegunn.github.io/mathue",
+  "keywords": [
+    "math",
+    "mathematics",
+    "linear-algebra",
+    "vector",
+    "matrix",
+    "quaternion",
+    "webgl",
+    "webgpu",
+    "graphics",
+    "3d",
+    "typescript",
+    "zero-allocation",
+    "performance"
+  ],
+
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
