@@ -1,0 +1,50 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm config
+      - name: Upload release version to Gist
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+        run: |
+          VERSION=$(jq -r .version package.json)
+          COLOR="brightgreen"
+
+          cat > release.json << EOF
+          {
+            "schemaVersion": 1,
+            "label": "Release",
+            "message": "$VERSION",
+            "color": "$COLOR"
+          }
+          EOF
+
+          ESCAPED_CONTENT=$(jq -Rs . < release.json)
+
+          printf '{
+            "files": {
+              "release.json": {
+                "content": %s
+              }
+            }
+          }' "$ESCAPED_CONTENT" > payload.json
+
+          curl -s -X PATCH \
+            -H "Authorization: token $GIST_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data-binary @payload.json \
+            https://api.github.com/gists/$RELEASE_GIST_ID
+          
+          rm payload.json
+          rm badge.json
