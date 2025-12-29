@@ -9,7 +9,7 @@ import { Vector3 } from "./Vector3";
 import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import { Vector4 } from "./Vector4";
 
-const EPSILON = 0.0001;
+const EPSILON = 1.0e-8;
 
 class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativeGroup<Matrix4>, Scalable<Matrix4>, Clonable<Matrix4> {
   /**
