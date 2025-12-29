@@ -499,19 +499,6 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     return this.multiply(temporary);
   }
 
-  private indexToScalar(row: number, scale: Vector3): number {
-    switch(row) {
-      case 0:
-        return scale.x;
-      case 1:
-        return scale.y;
-      case 2:
-        return scale.z;
-      default:
-        return 1;
-    }
-  }
-
   /**
    * apply scale transformation
    * @param scale 3D scale vector
@@ -532,7 +519,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   scale(scale: Vector3): Matrix4 {
     const {order} = this;
     for (const row of range(order)) {
-      const scalar = this.indexToScalar(row, scale);
+      const scalar = row === order - 1 ? 1 : scale.elements[row];
       for (const column of range(order)) {
         const index = row * order + column;
         this.elements[index] *= scalar;
