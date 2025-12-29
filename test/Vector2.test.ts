@@ -30,8 +30,8 @@ describe('Vector2', () => {
     expect(v.y).toBe(0);
   });
 
-  it('allOnes()', () => {
-    const v = Vector2.allOnes();
+  it('one()', () => {
+    const v = Vector2.one();
     expect(v.x).toBe(1);
     expect(v.y).toBe(1);
   })
@@ -45,7 +45,7 @@ describe('Vector2', () => {
 
   it('isZero()', () => {
     const z = Vector2.zero();
-    const o = Vector2.allOnes();
+    const o = Vector2.one();
     expect(z.isZero()).toBeTruthy();
     expect(o.isZero()).toBeFalsy();
   });

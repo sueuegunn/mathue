@@ -112,11 +112,11 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    * 
    * @example
    * ```ts
-   * const v = Vector2.allOnes();
+   * const v = Vector2.one();
    * console.log(v); // (1, 1)
    * ```
    */
-  static allOnes(): Vector2 {
+  static one(): Vector2 {
     return new Vector2(1, 1);
   }
 
@@ -142,7 +142,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    * @example
    * ```ts
    * const zero = Vector2.zero();
-   * const ones = Vector2.allOnes();
+   * const ones = Vector2.one();
    * console.log(zero.isZero()); // true
    * console.log(ones.isZero()); // false
    */

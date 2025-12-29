@@ -160,11 +160,11 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * 
    * @example
    * ```ts
-   * const v = Vector4.allOnes();
+   * const v = Vector4.one();
    * console.log(v); // (1, 1, 1, 1)
    * ```
    */
-  static allOnes(): Vector4 {
+  static one(): Vector4 {
     return new Vector4(1, 1, 1, 1);
   }
 
@@ -190,7 +190,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * @example
    * ```ts
    * const zero = Vector4.zero();
-   * const ones = Vector4.allOnes();
+   * const ones = Vector4.one();
    * console.log(zero.isZero()); // true
    * console.log(ones.isZero()); // false
    * ```

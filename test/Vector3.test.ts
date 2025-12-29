@@ -42,8 +42,8 @@ describe('Vector3', () => {
     expect(v.z).toBe(0);
   });
 
-  it('allOnes()', () => {
-    const v = Vector3.allOnes();
+  it('one()', () => {
+    const v = Vector3.one();
     expect(v.x).toBe(1);
     expect(v.y).toBe(1);
     expect(v.z).toBe(1);
@@ -61,7 +61,7 @@ describe('Vector3', () => {
     const z = Vector3.zero();
     expect(z.isZero()).toBeTruthy();
 
-    const o = Vector3.allOnes();
+    const o = Vector3.one();
     expect(o.isZero()).toBeFalsy();
   });
 

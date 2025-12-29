@@ -136,12 +136,12 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * 
    * @example
    * ```ts
-   * const v = Vector3.allOnes();
+   * const v = Vector3.one();
    * console.log(v); // (1, 1, 1)
    * ```
    * 
    */
-  static allOnes(): Vector3 {
+  static one(): Vector3 {
     return new Vector3(1, 1, 1);
   }
 
@@ -167,7 +167,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * @example
    * ```ts
    * const zero = Vector3.zero();
-   * const ones = Vector3.allOnes();
+   * const ones = Vector3.one();
    * console.log(zero.isZero()); // true
    * console.log(ones.isZero()); // false
    * ```
