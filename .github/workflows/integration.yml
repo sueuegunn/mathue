@@ -67,6 +67,7 @@ jobs:
           cd test-project
           npm i
           npm i ../mathue-*.tgz
+          npm i playwright
           
           cat << EOF > src/main.ts
           import {Vector3} from 'mathue';
