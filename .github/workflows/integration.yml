@@ -1,0 +1,131 @@
+name: Integration
+on: [push]
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run build
+      - run: npm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-tarball
+          path: mathue-*.tgz
+  inspect:
+    needs: pack
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        consumer: [umd, ts, cjs, mjs]
+    steps:
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/download-artifact@v4
+        with:
+          name: package-tarball
+          path: .
+      - name: Test UMD
+        if: matrix.consumer == 'umd'
+        run: |
+          mkdir test-project
+          cd test-project
+          tar -xzf ../mathue-*.tgz
+
+          cat << EOF > index.html
+          <!DOCTYPE html>
+          <body>
+            <script src="./package/dist/mathue.umd.js"></script>
+            <script>
+              try {
+                const {Vector3} = window.mathue;
+                const v1 = new Vector3(0, 1, 2);
+                const v2 = new Vector3(3, 4, 5);
+                v1.add(v2);
+                if (v1.x === 3) {
+                  document.body.innerHTML = '<h1>SUCCESS</h1>';
+                } else {
+                  throw new Error();
+                }
+              } catch() {
+                document.body.innerHTML = '<h1>FAILED</h1>';
+              }
+            </script>
+          </body>
+          EOF
+
+          npx playwright install --with-deps chromium
+          npx http-server -p 8080 & sleep 2
+          npx playwright open http://localhost:8080 | grep "SUCCESS" || exit 1
+      - name: Test TypeScript import
+        if: matrix.consumer == 'ts'
+        run: |
+          npm create vite@latest test-project -- --template vanilla-ts
+          cd test-project
+          npm i
+          npm i ../mathue-*.tgz
+          
+          cat << EOF > src/main.ts
+          import {Vector3} from 'mathue';
+          const v1 = new Vector3(0, 1, 2);
+          const v2 = new Vector3(3, 4, 5);
+          v1.add(v2);
+          const app = document.querySelector<HTMLDivElement>('#app')!
+          app.innerHTML = v.x === 3 ? '<h1>SUCCESS</h1>' : '<h1>FAILED</h1>';
+          EOF
+
+          npm run build
+          npm run preview -- --port 8080 &
+
+          npx playwright install --with-deps chromium
+          sleep 2
+          node -e "
+            const {chromium} = reqiore('playwright');
+            (async () => {
+              const browser = await chromium.launch();
+              const page = await browser.newPage();
+              await page.goto('http://localhost:8080');
+              const text = await page.locator('h1').textContent();
+              console.log('Result: ', text);
+              if (text !== 'SUCCESS') {
+                process.exit(1);
+              }
+              await browser.close();
+            })();
+          "
+      - name: Test JavaScript require
+        if: matrix.consumer == 'cjs'
+        run: |
+          npm create vite@latest test-project -- --template vanilla-ts
+          cd test-project
+          npm i
+          npm i ../mathue-*.tgz
+
+          cat << EOF > src/test.cjs
+          import {Vector3} = require('mathue');
+          const v1 = new Vector3(0, 1, 2);
+          const v2 = new Vector3(3, 4, 5);
+          v1.add(v2);
+          console.log(v1.elements);
+          EOF
+
+          node src/test.cjs
+      - name: Test JavaScript import 
+        if: matrix.consumer == 'mjs'
+        run: |
+          npm create vite@latest test-project -- --template vanilla-ts
+          cd test-project
+          npm i
+          npm i ../mathue-*.tgz
+
+          cat << EOF > src/test.mjs
+          import {Vector3} from 'mathue';
+          const v1 = new Vector3(0, 1, 2);
+          const v2 = new Vector3(3, 4, 5);
+          v1.add(v2);
+          console.log(v1.elements);
+          EOF
+
+          node src/test.mjs
