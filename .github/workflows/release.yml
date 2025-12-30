@@ -47,4 +47,4 @@ jobs:
             https://api.github.com/gists/$RELEASE_GIST_ID
           
           rm payload.json
-          rm badge.json
+          rm release.json
