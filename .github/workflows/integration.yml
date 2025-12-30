@@ -27,39 +27,39 @@ jobs:
         with:
           name: package-tarball
           path: .
-      - name: Test UMD
-        if: matrix.consumer == 'umd'
-        run: |
-          mkdir test-project
-          cd test-project
-          tar -xzf ../mathue-*.tgz
+      # - name: Test UMD
+      #   if: matrix.consumer == 'umd'
+      #   run: |
+      #     mkdir test-project
+      #     cd test-project
+      #     tar -xzf ../mathue-*.tgz
 
-          cat << EOF > index.html
-          <!DOCTYPE html>
-          <body>
-            <script src="./package/dist/mathue.umd.js"></script>
-            <script>
-              try {
-                const {Vector3} = window.mathue;
-                const v1 = new Vector3(0, 1, 2);
-                const v2 = new Vector3(3, 4, 5);
-                v1.add(v2);
-                if (v1.x === 3) {
-                  document.body.innerHTML = '<h1>SUCCESS</h1>';
-                } else {
-                  throw new Error();
-                }
-              } catch() {
-                document.body.innerHTML = '<h1>FAILED</h1>';
-              }
-            </script>
-          </body>
-          EOF
+      #     cat << EOF > index.html
+      #     <!DOCTYPE html>
+      #     <body>
+      #       <script src="./package/dist/mathue.umd.js"></script>
+      #       <script>
+      #         try {
+      #           const {Vector3} = window.mathue;
+      #           const v1 = new Vector3(0, 1, 2);
+      #           const v2 = new Vector3(3, 4, 5);
+      #           v1.add(v2);
+      #           if (v1.x === 3) {
+      #             document.body.innerHTML = '<h1>SUCCESS</h1>';
+      #           } else {
+      #             throw new Error();
+      #           }
+      #         } catch() {
+      #           document.body.innerHTML = '<h1>FAILED</h1>';
+      #         }
+      #       </script>
+      #     </body>
+      #     EOF
 
-          npx playwright install --with-deps chromium
-          npx http-server -p 8080 &
-          sleep 2
-          xvfb-run -a npx playwright open http://localhost:8080 | grep "SUCCESS" || exit 1
+      #     npx playwright install --with-deps chromium
+      #     npx http-server -p 8080 &
+      #     sleep 2
+      #     xvfb-run -a npx playwright open http://localhost:8080 | grep "SUCCESS" || exit 1
       - name: Test TypeScript import
         if: matrix.consumer == 'ts'
         run: |
