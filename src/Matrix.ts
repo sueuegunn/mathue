@@ -1,8 +1,8 @@
-import type {LengthOfMatrix, MatrixOrder, TupleOf} from './types';
+import type {MatrixOrder} from './types';
 
 interface Matrix<Order extends MatrixOrder> {
   readonly order: Order;
-  readonly elements: TupleOf<number, LengthOfMatrix<Order>>;
+  readonly elements: Float32Array;
 }
 
 export type {Matrix};

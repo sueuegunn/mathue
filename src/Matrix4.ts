@@ -4,7 +4,6 @@ import type { Scalable } from "./Scalable";
 import type { Clonable } from "./Clonable";
 import { range } from "./functions";
 import type { Quaternion } from "./Quaternion";
-import type { TupleOf } from "./types";
 import { Vector3 } from "./Vector3";
 import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import { Vector4 } from "./Vector4";
@@ -32,7 +31,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   0, 0, 0, 1 ]
    * ```
    */
-  readonly elements: TupleOf<number, 16>;
+  readonly elements: Float32Array;
 
   private static _tmpMatrix?: Matrix4;
   private static get tmpMatrix(): Matrix4 {
@@ -79,7 +78,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     e32: number,
     e33: number,
   ) {
-    this.elements = [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33];
+    this.elements = Float32Array.of(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33);
   }
 
   /**
