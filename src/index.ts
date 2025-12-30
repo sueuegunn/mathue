@@ -13,12 +13,15 @@ import { Vector1 } from "./Vector1";
 import { Vector2 } from "./Vector2";
 import { Vector3 } from "./Vector3";
 import { Vector4 } from "./Vector4";
+import type { RangeOptions } from "./functions";
+import { range, sum, sumMap } from "./functions";
 
 // types
 export type {
   VectorDimension,
   LengthOfMatrix,
   MatrixOrder,
+  RangeOptions,
   TupleOf,
 };
 
@@ -42,4 +45,10 @@ export {
   Vector2,
   Vector3,
   Vector4,
+};
+
+export {
+  range,
+  sum,
+  sumMap,
 };
