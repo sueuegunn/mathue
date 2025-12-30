@@ -20,7 +20,7 @@ jobs:
         run: |
           ls -la
 
-          VERSION=$(jq -r .version package.json)
+          VERSION=$(jq -r '.version' package.json)
           COLOR="brightgreen"
 
           cat > release.json << EOF
