@@ -16,14 +16,10 @@ jobs:
       - name: Upload release version to Gist
         env:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
-          RELEASE_GIST_ID: ${{ secrets.RELEASE_GIST_ID }}
+          GIST_ID: ${{ secrets.GIST_ID }}
         run: |
-          ls -la
-
           VERSION=$(jq -r '.version' ./package.json)
-          echo "version: $VERSION"
           COLOR="brightgreen"
-          echo "color: $COLOR"
 
           cat > release.json << EOF
           {
@@ -33,24 +29,22 @@ jobs:
             "color": "$COLOR"
           }
           EOF
-          cat release.json
 
           ESCAPED_CONTENT=$(jq -Rs . < release.json)
 
           printf '{
             "files": {
-              "release.json": {
+              "mathue-release-version.json": {
                 "content": %s
               }
             }
           }' "$ESCAPED_CONTENT" > payload.json
-          cat payload.json
 
           curl -s -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
             -H "Content-Type: application/json" \
             --data-binary @payload.json \
-            https://api.github.com/gists/$RELEASE_GIST_ID
+            https://api.github.com/gists/$GIST_ID
           
           rm payload.json
           rm release.json
