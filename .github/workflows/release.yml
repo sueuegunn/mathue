@@ -18,6 +18,8 @@ jobs:
           GIST_TOKEN: ${{ secrets.RELEASE_GIST_ID }}
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
+          ls -la
+
           VERSION=$(jq -r .version package.json)
           COLOR="brightgreen"
 
