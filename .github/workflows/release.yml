@@ -20,8 +20,10 @@ jobs:
         run: |
           ls -la
 
-          VERSION=$(jq -r '.version' package.json)
+          VERSION=$(jq -r '.version' ./package.json)
+          echo "version: $VERSION"
           COLOR="brightgreen"
+          echo "color: $COLOR"
 
           cat > release.json << EOF
           {
@@ -31,6 +33,7 @@ jobs:
             "color": "$COLOR"
           }
           EOF
+          cat release.json
 
           ESCAPED_CONTENT=$(jq -Rs . < release.json)
 
@@ -41,6 +44,7 @@ jobs:
               }
             }
           }' "$ESCAPED_CONTENT" > payload.json
+          cat payload.json
 
           curl -s -X PATCH \
             -H "Authorization: token $GIST_TOKEN" \
