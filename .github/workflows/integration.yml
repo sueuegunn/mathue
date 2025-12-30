@@ -104,7 +104,7 @@ jobs:
           npm i ../mathue-*.tgz
 
           cat << EOF > src/test.cjs
-          import {Vector3} = require('mathue');
+          const {Vector3} = require('mathue');
           const v1 = new Vector3(0, 1, 2);
           const v2 = new Vector3(3, 4, 5);
           v1.add(v2);
