@@ -57,8 +57,9 @@ jobs:
           EOF
 
           npx playwright install --with-deps chromium
-          npx http-server -p 8080 & sleep 2
-          npx playwright open http://localhost:8080 | grep "SUCCESS" || exit 1
+          npx http-server -p 8080 &
+          sleep 2
+          xvfb-run -a npx playwright open http://localhost:8080 | grep "SUCCESS" || exit 1
       - name: Test TypeScript import
         if: matrix.consumer == 'ts'
         run: |
