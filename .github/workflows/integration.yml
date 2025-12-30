@@ -73,7 +73,7 @@ jobs:
           const v2 = new Vector3(3, 4, 5);
           v1.add(v2);
           const app = document.querySelector<HTMLDivElement>('#app')!
-          app.innerHTML = v.x === 3 ? '<h1>SUCCESS</h1>' : '<h1>FAILED</h1>';
+          app.innerHTML = v1.x === 3 ? '<h1>SUCCESS</h1>' : '<h1>FAILED</h1>';
           EOF
 
           npm run build
