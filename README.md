@@ -5,6 +5,8 @@
 
 [![Test](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml/badge.svg?event=push)](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/mathue-line-coverage-badge.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+![Release](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/mathue-release-version.json)
 
 ### TypeScript math library
 
