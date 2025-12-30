@@ -65,18 +65,18 @@ describe('Vector3', () => {
     expect(o.isZero()).toBeFalsy();
   });
 
-  it('setValues()', () => {
+  it('set()', () => {
     const v = Vector3.zero();
-    v.setValues(1, 2, 3);
+    v.set(1, 2, 3);
     expect(v.x).toBe(1);
     expect(v.y).toBe(2);
     expect(v.z).toBe(3);
   });
 
-  it('set()', () => {
+  it('copy()', () => {
     const v1 = Vector3.zero();
     const v2 = new Vector3(1, 2, 3);
-    v1.set(v2);
+    v1.copy(v2);
     expect(v1.x).toBe(1);
     expect(v1.y).toBe(2);
     expect(v1.z).toBe(3);

@@ -46,7 +46,7 @@ class PolarCoordinate3 {
     const x = radius * sinTheta * cos(phi);
     const y = radius * sinTheta * sin(phi);
     const z = radius * cos(theta);
-    out.setValues(x, y, z);
+    out.set(x, y, z);
   }
 
   toUpVector(out: Vector3): void {
@@ -56,7 +56,7 @@ class PolarCoordinate3 {
     const x = -cosTheta * cos(phi);
     const y = -cosTheta * sin(phi);
     const z = sin(theta);
-    out.setValues(x, y, z);
+    out.set(x, y, z);
   }
 
   toRightVector(out: Vector3): void {
@@ -65,7 +65,7 @@ class PolarCoordinate3 {
     const x = -sin(phi);
     const y = cos(phi);
     const z = 0;
-    out.setValues(x, y, z);
+    out.set(x, y, z);
   }
 }
 

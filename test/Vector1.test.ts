@@ -37,16 +37,16 @@ describe('Vector1', () => {
     expect(o.isZero()).toBeFalsy();
   });
 
-  it('setValue()', () => {
+  it('set()', () => {
     const v = Vector1.zero();
-    v.setValue(1);
+    v.set(1);
     expect(v.x).toBe(1);
   });
 
-  it('set()', () => {
+  it('copy()', () => {
     const v1 = new Vector1(1);
     const v2 = new Vector1(2);
-    v1.set(v2);
+    v1.copy(v2);
     expect(v1.x).toBe(2);
   });
 

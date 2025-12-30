@@ -133,11 +133,11 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * @example
    * ```ts
    * const v = new Vector1(2);
-   * v.setValue(3);
+   * v.set(3);
    * console.log(v.x); // 3
    * ```
    */
-  setValue(x: number): Vector1 {
+  set(x: number): Vector1 {
     this.x = x;
     return this;
   }
@@ -149,12 +149,12 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    * ```ts
    * const v1 = new Vector1(1);
    * const v2 = new Vector1(2);
-   * v1.set(v2);
+   * v1.copy(v2);
    * console.log(v1.x); // 2
    * console.log(v2.x); // 2
    * ```
    */
-  set(other: Vector1): Vector1 {
+  copy(other: Vector1): Vector1 {
     this.x = other.x;
     return this;
   }
@@ -259,9 +259,9 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
 
   applyMatrix4(matrix: Matrix4): Vector1 {
     const {tmpMatrix} = Vector1;
-    tmpMatrix.set(matrix);
+    tmpMatrix.copy(matrix);
     const {x} = tmpMatrix._applyVector(this.x, 0, 0, 0);
-    this.setValue(x);
+    this.set(x);
     return this;
   }
 
@@ -269,7 +269,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
     const {tmpMatrix} = Vector1;
     tmpMatrix.setQuaternion(quaternion);
     const {x} = tmpMatrix._applyVector(this.x, 0, 0, 0);
-    this.setValue(x);
+    this.set(x);
     return this;
   }
 }

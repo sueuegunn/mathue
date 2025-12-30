@@ -152,11 +152,11 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * ```ts
    * const q = Quaternion.identity();
    * console.log(q); // (1, 0, 0, 0)
-   * q.setValues(0, 0, 0, 1);
+   * q.set(0, 0, 0, 1);
    * console.log(q); // (0, 0, 0, 1)
    * ```
    */
-  setValues(a: number, b: number, c: number, d: number): Quaternion {
+  set(a: number, b: number, c: number, d: number): Quaternion {
     this._a = a;
     this._b = b;
     this._c = c;
@@ -173,14 +173,14 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * ```ts
    * const q1 = new Quaternion(1, 2, 3, 4);
    * const q2 = new Quaternion(5, 6, 7, 8);
-   * q1.set(q2);
+   * q1.copy(q2);
    * console.log(q1); // (5, 6, 7, 8)
    * console.log(q2); // (5, 6, 7, 8)
    * ```
    */
-  set(other: Quaternion): Quaternion {
+  copy(other: Quaternion): Quaternion {
     const {a, b, c, d} = other;
-    return this.setValues(a, b, c, d);
+    return this.set(a, b, c, d);
   }
 
   /**
@@ -195,7 +195,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * ```
    */
   setIdentity(): void {
-    this.setValues(1, 0, 0, 0);
+    this.set(1, 0, 0, 0);
   }
 
   /**
@@ -221,7 +221,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
     axis.normalize();
     const {x, y, z} = axis;
     const sin = Math.sin(angle / 2);
-    this.setValues(Math.cos(angle / 2), x * sin, y * sin, z * sin);
+    this.set(Math.cos(angle / 2), x * sin, y * sin, z * sin);
   }
 
   /**
@@ -376,7 +376,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    */
   divide(other: Quaternion): Quaternion | null {
     const {temporary} = Quaternion;
-    temporary.set(other);
+    temporary.copy(other);
     if (!temporary.invert()) {
       return null;
     }

@@ -183,11 +183,11 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * @example
    * ```ts
    * const v = new Vector3(4, 5, 6);
-   * v.setValues(7, 8, 9);
+   * v.set(7, 8, 9);
    * console.log(v); // (7, 8, 9)
    * ```
    */
-  setValues(x: number, y: number, z: number): Vector3 {
+  set(x: number, y: number, z: number): Vector3 {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -201,14 +201,14 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * ```ts
    * const v1 = new Vector3(4, 5, 6);
    * const v2 = new Vector3(7, 8, 9);
-   * v1.set(v2);
+   * v1.copy(v2);
    * console.log(v1); // (7, 8, 9)
    * console.log(v2); // (7, 8, 9)
    * ```
    */
-  set(other: Vector3): Vector3 {
+  copy(other: Vector3): Vector3 {
     const {x, y, z} = other;
-    return this.setValues(x, y, z);
+    return this.set(x, y, z);
   }
 
   /**
@@ -347,19 +347,19 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
     const x = ty * oz - tz * oy;
     const y = tz * ox - tx * oz;
     const z = tx * oy - ty * ox;
-    return this.setValues(x, y, z);
+    return this.set(x, y, z);
   }
 
   crossTo(other: Vector3, out: Vector3): Vector3 {
-    out.set(this);
+    out.copy(this);
     return out.cross(other);
   }
 
   applyMatrix4(matrix: Matrix4): Vector3 {
     const {tmpMatrix} = Vector3;
-    tmpMatrix.set(matrix);
+    tmpMatrix.copy(matrix);
     const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
-    this.setValues(x, y, z);
+    this.set(x, y, z);
     return this;
   }
 
@@ -367,7 +367,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
     const {tmpMatrix} = Vector3;
     tmpMatrix.setQuaternion(quaternion);
     const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
-    this.setValues(x, y, z);
+    this.set(x, y, z);
     return this;
   }
 }

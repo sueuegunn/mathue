@@ -49,9 +49,9 @@ describe('Matrix4', () => {
     }
   });
 
-  it('setValues()', () => {
+  it('set()', () => {
     const m = Matrix4.zero();
-    m.setValues(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+    m.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     
     const {order} = m;
     for (const index of range(order ** 2)) {
@@ -59,9 +59,9 @@ describe('Matrix4', () => {
     }
   });
 
-  it('set()', () => {
+  it('copy()', () => {
     const m = Matrix4.zero();
-    m.set(Matrix4.identity());
+    m.copy(Matrix4.identity());
     
     const {order} = m;
     for (const row of range(order)) {

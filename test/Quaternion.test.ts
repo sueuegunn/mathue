@@ -63,18 +63,19 @@ describe('Quaternion', () => {
     expect(c.d).toBe(0);
   });
 
-  it('setValues()', () => {
-    const q = new Quaternion(2, 3, 4, 5);
+  it('set()', () => {
+    const q = Quaternion.identity();
+    q.set(2, 3, 4, 5);
     expect(q.a).toBe(2);
     expect(q.b).toBe(3);
     expect(q.c).toBe(4);
     expect(q.d).toBe(5);
   });
 
-  it('set()', () => {
+  it('copy()', () => {
     const q1 = Quaternion.identity();
     const q2 = new Quaternion(2, 3, 4, 5);
-    q1.set(q2);
+    q1.copy(q2);
     expect(q1.a).toBe(2);
     expect(q1.b).toBe(3);
     expect(q1.c).toBe(4);

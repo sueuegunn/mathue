@@ -142,14 +142,14 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * 
    * @example
    * const m = Matrix4.zero();
-   * m.setValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+   * m.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
    * console.log(m.elements);
    * // [ 1, 0, 0, 0,
    * //   0, 1, 0, 0,
    * //   0, 0, 1, 0,
    * //   0, 0, 0, 1 ]
    */
-  setValues(
+  set(
     e00: number,
     e01: number,
     e02: number,
@@ -201,9 +201,9 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   0, 0, 0, 1 ]
    * ```
    */
-  set(other: Matrix4): void {
+  copy(other: Matrix4): void {
     const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = other.elements;
-    this.setValues(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33);
+    this.set(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33);
   }
 
   /**
@@ -221,7 +221,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```
    */
   setIdentity(): Matrix4 {
-    this.setValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    this.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     return this;
   }
 
@@ -254,7 +254,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const bc = b * c;
     const bd = b * d;
     const cd = c * d;
-    this.setValues(
+    this.set(
       1 - s * (c2 + d2),
       s * (bc - ad),
       s * (bd + ac),
@@ -491,7 +491,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   divide(other: Matrix4): Matrix4 | null {
     const {tmpMatrix: temporary} = Matrix4;
-    temporary.set(other);
+    temporary.copy(other);
     if (!temporary.invert()) {
       return null;
     }
@@ -592,7 +592,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const bz = x * a.y - y * a.x;
     const b = new Vector3(bx, by, bz).normalize();
 
-    this.setValues(
+    this.set(
       a.x,
       b.x,
       x,
@@ -634,7 +634,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   perspective(verticalFov: number, near: number, far: number, aspect: number): Matrix4 {
     const f = 1.0 / Math.tan(verticalFov / 2);
-    this.setValues(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
+    this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
     if (far === Infinity) {
       this.elements[10] = -(far + near) / (far - near);
@@ -650,14 +650,14 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   /** @ignore */
   _applyVector(x: number, y: number, z: number, w: number): Vector4 {
     const {tmpVector} = Matrix4;
-    tmpVector.setValues(x, y, z, w);
+    tmpVector.set(x, y, z, w);
 
     const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
     const xOut = e00 * x + e01 * y + e02 * z + e03 * w;
     const yOut = e10 * x + e11 * y + e12 * z + e13 * w;
     const zOut = e20 * x + e21 * y + e22 * z + e23 * w;
     const wOut = e30 * x + e31 * y + e32 * z + e33 * w;
-    tmpVector.setValues(xOut, yOut, zOut, wOut);
+    tmpVector.set(xOut, yOut, zOut, wOut);
 
     return tmpVector;
   }

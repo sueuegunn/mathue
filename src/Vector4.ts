@@ -206,11 +206,11 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * @example
    * ```ts
    * const v = new Vector4(0, 1, 2, 3);
-   * v.setValues(5, 6, 7, 8);
+   * v.set(5, 6, 7, 8);
    * console.log(v); // (5, 6, 7, 8)
    * ```
    */
-  setValues(x: number, y: number, z: number, w: number): void {
+  set(x: number, y: number, z: number, w: number): void {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -224,14 +224,14 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    * ```ts
    * const v1 = new Vector4(0, 1, 2, 3);
    * const v2 = new Vector4(5, 6, 7, 8);
-   * v1.set(v2);
+   * v1.copy(v2);
    * console.log(v1); // (5, 6, 7, 8)
    * console.log(v2); // (5, 6, 7, 8)
    * ```
    */
-  set(other: Vector4): void {
+  copy(other: Vector4): void {
     const {x, y, z, w} = other;
-    this.setValues(x, y, z, w);
+    this.set(x, y, z, w);
   }
 
   /**
@@ -350,10 +350,10 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
 
   applyMatrix4(matrix: Matrix4): Vector4 {
     const {tmpMatrix} = Vector4;
-    tmpMatrix.set(matrix);
+    tmpMatrix.copy(matrix);
     const {x, y, z, w} = this;
     const tmpVector = tmpMatrix._applyVector(x, y, z, w);
-    this.set(tmpVector);
+    this.copy(tmpVector);
     return this;
   }
 
@@ -362,7 +362,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
     tmpMatrix.setQuaternion(quaternion);
     const {x, y, z, w} = this;
     const tmpVector = tmpMatrix._applyVector(x, y, z, w);
-    this.set(tmpVector);
+    this.copy(tmpVector);
     return this;
   }
 }
