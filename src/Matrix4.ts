@@ -10,6 +10,9 @@ import { Vector4 } from "./Vector4";
 
 const EPSILON = 1.0e-8;
 
+/**
+ * 4x4 matrix class. It looks column-major order. And post multiplied.
+ */
 class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativeGroup<Matrix4>, Scalable<Matrix4>, Clonable<Matrix4> {
   /**
    * @example
@@ -50,14 +53,42 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Creates a new 4x4 matrix with the specified elements. \
+   * The internal data is stored in **column-major** order in a `Float32Array`.
+   * 
+   * The parameters `e(column)(row)` correspond to the following matrix positions: \
+   * ```
+   * | e00 e10 e20 e30 |
+   * | e01 e11 e21 e31 |
+   * | e02 e12 e22 e32 |
+   * | e03 e13 e23 e33 |
+   * ```
+   * 
+   * The `elements` array stores each column sequentialy: \
+   * `[e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33]`
+   * 
+   * @param e00 element in column 0, row 0
+   * @param e01 element in column 0, row 1
+   * @param e02 element in column 0, row 2
+   * @param e03 element in column 0, row 3
+   * @param e10 element in column 1, row 0
+   * @param e11 element in column 1, row 1
+   * @param e12 element in column 1, row 2
+   * @param e13 element in column 1, row 3
+   * @param e20 element in column 2, row 0
+   * @param e21 element in column 2, row 1
+   * @param e22 element in column 2, row 2
+   * @param e23 element in column 2, row 3
+   * @param e30 element in column 3, row 0
+   * @param e31 element in column 3, row 1
+   * @param e32 element in column 3, row 2
+   * @param e33 element in column 3, row 3
+   * 
    * @example
    * ```ts
-   * const m = new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+   * const m = new Matrix4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
    * console.log(m.elements);
-   * // [ 1, 0, 0, 0,
-   * //   0, 1, 0, 0,
-   * //   0, 0, 1, 0,
-   * //   0, 0, 0, 1 ]
+   * // [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
    * ```
    */
   constructor(
