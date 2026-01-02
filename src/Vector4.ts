@@ -5,7 +5,6 @@ import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
 import { Matrix4 } from "./Matrix4";
 import type { Quaternion } from "./Quaternion";
-import { Matrix3 } from "./Matrix3";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
