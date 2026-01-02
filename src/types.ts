@@ -1,6 +1,6 @@
 type VectorDimension = 1 | 2 | 3 | 4;
 
-type MatrixOrder = 2 | 3 | 4;
+type MatrixOrder = 3 | 4;
 
 /**
  * @example

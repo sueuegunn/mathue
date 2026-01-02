@@ -7,6 +7,7 @@ import type { Normalizable } from "./Normalizable";
 import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import type { Scalable } from "./Scalable";
 import type { Vector } from "./Vector";
+import { Matrix3 } from "./Matrix3";
 import { Matrix4 } from "./Matrix4";
 import { Quaternion } from "./Quaternion";
 import { Vector1 } from "./Vector1";
@@ -39,6 +40,7 @@ export type {
 
 // classes
 export {
+  Matrix3,
   Matrix4,
   Quaternion,
   Vector1,

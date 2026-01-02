@@ -4,7 +4,7 @@ import { Vector3 } from "../src/Vector3";
 import { range } from "../src/functions";
 import { Quaternion } from "../src/Quaternion";
 
-const PRECISION= 8;
+const PRECISION = 8;
 
 describe('Matrix4', () => {
   it('identity()', () => {

@@ -290,10 +290,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * const q = Quaternion.identity();
    * m.setQuaternion(q);
    * console.log(m.elements);
-   * // [ 1, 0, 0, 0,
-   * //   0, 1, 0, 0,
-   * //   0, 0, 1, 0,
-   * //   0, 0, 0, 1 ]
+   * // [ 0, 0, 0, 0,
+   * //   0, 0, 0, 0,
+   * //   0, 0, 0, 0,
+   * //   0, 0, 0, 0 ]
    * ```
    */
   setQuaternion(quaternion: Quaternion): Matrix4 {
@@ -466,27 +466,26 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     return this;
   }
 
-
-
   /**
    * Calculates determinant of this matrix (pure)
    * @returns determinant of this matrix
    */
   determinant(): number {
     const [a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, a30, a31, a32, a33] = this.elements;
-
-    return a00 * (a11 * (a22 * a33 - a23 * a32)
-      - a12 * (a21 * a33 - a23 * a31)
-      + a13 * (a21 * a32 - a22 * a31))
-      - a01 * (a10 * (a22 * a33 - a23 * a32)
-      - a12 * (a20 * a33 - a23 * a30)
-      + a13 * (a20 * a32 - a22 * a30))
-      + a02 * (a10 * (a21 * a33 - a23 * a31)
-      - a11 * (a20 * a33 - a23 * a30)
-      + a13 * (a20 * a31 - a21 * a30))
-      - a03 * (a10 * (a21 * a32 - a22 * a31)
-      - a11 * (a20 * a32 - a22 * a30)
-      + a12 * (a20 * a31 - a21 * a30));
+    return (
+      a00 * (a11 * (a22 * a33 - a23 * a32) -
+      a12 * (a21 * a33 - a23 * a31) +
+      a13 * (a21 * a32 - a22 * a31)) -
+      a01 * (a10 * (a22 * a33 - a23 * a32) -
+      a12 * (a20 * a33 - a23 * a30) +
+      a13 * (a20 * a32 - a22 * a30)) +
+      a02 * (a10 * (a21 * a33 - a23 * a31) -
+      a11 * (a20 * a33 - a23 * a30) +
+      a13 * (a20 * a31 - a21 * a30)) -
+      a03 * (a10 * (a21 * a32 - a22 * a31) -
+      a11 * (a20 * a32 - a22 * a30) +
+      a12 * (a20 * a31 - a21 * a30))
+    );
   }
 
   /**
@@ -494,7 +493,6 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @returns `this` instance for method chaining if this is invertible, `null` otherwise
    */
   invert(): Matrix4 | null {
-    // 行列式計算
     const determinant = this.determinant();
     if (Math.abs(determinant) < EPSILON) {
       return null;
@@ -521,22 +519,18 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const tmp16 = a10 * a31 - a11 * a30;
     const tmp17 = a10 * a21 - a11 * a20;
 
-    // 1行目
     this.elements[0] = (a11 * tmp0 - a12 * tmp1 + a13 * tmp2) / determinant;
     this.elements[1] = -(a01 * tmp0 - a02 * tmp1 + a03 * tmp2) / determinant;
     this.elements[2] = (a01 * tmp3 - a02 * tmp4 + a03 * tmp5) / determinant;
     this.elements[3] = -(a01 * tmp6 - a02 * tmp7 + a03 * tmp8) / determinant;
-    // 2行目
     this.elements[4] = -(a10 * tmp0 - a12 * tmp9 + a13 * tmp10) / determinant;
     this.elements[5] = (a00 * tmp0 - a02 * tmp9 + a03 * tmp10) / determinant;
     this.elements[6] = -(a00 * tmp3 - a02 * tmp11 + a03 * tmp12) / determinant;
     this.elements[7] = (a00 * tmp6 - a02 * tmp13 + a03 * tmp14) / determinant;
-    // 3行目
     this.elements[8] = (a10 * tmp1 - a11 * tmp9 + a13 * tmp15) / determinant;
     this.elements[9] = -(a00 * tmp1 - a01 * tmp9 + a03 * tmp15) / determinant;
     this.elements[10] = (a00 * tmp4 - a01 * tmp11 + a03 * tmp16) / determinant;
     this.elements[11] = -(a00 * tmp7 - a01 * tmp13 + a03 * tmp17) / determinant;
-    // 4行目
     this.elements[12] = -(a10 * tmp2 - a11 * tmp10 + a12 * tmp15) / determinant;
     this.elements[13] = (a00 * tmp2 - a01 * tmp10 + a02 * tmp15) / determinant;
     this.elements[14] = -(a00 * tmp5 - a01 * tmp12 + a02 * tmp16) / determinant;
@@ -572,12 +566,12 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @returns `this` instance for method chaining if other is invertible, `null` otherwise
    */
   divide(other: Matrix4): Matrix4 | null {
-    const {tmpMatrix: temporary} = Matrix4;
-    temporary.copy(other);
-    if (!temporary.invert()) {
+    const {tmpMatrix} = Matrix4;
+    tmpMatrix.copy(other);
+    if (!tmpMatrix.invert()) {
       return null;
     }
-    return this.multiply(temporary);
+    return this.multiply(tmpMatrix);
   }
 
   /**

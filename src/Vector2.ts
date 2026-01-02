@@ -28,12 +28,12 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    */
   readonly elements: [number, number];
 
-  private static _tmpMatrix?: Matrix4;
-  private static get tmpMatrix(): Matrix4 {
-    if (!this._tmpMatrix) {
-      this._tmpMatrix = Matrix4.identity();
+  private static _tmpMatrix4?: Matrix4;
+  private static get tmpMatrix4(): Matrix4 {
+    if (!this._tmpMatrix4) {
+      this._tmpMatrix4 = Matrix4.identity();
     }
-    return this._tmpMatrix;
+    return this._tmpMatrix4;
   }
 
   /**
@@ -312,7 +312,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
   }
 
   applyMatrix4(matrix: Matrix4): Vector2 {
-    const {tmpMatrix} = Vector2;
+    const {tmpMatrix4: tmpMatrix} = Vector2;
     tmpMatrix.copy(matrix);
     const {x, y} = tmpMatrix._applyVector(this.x, this.y, 0, 0);
     this.set(x, y);
@@ -320,7 +320,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
   }
 
   applyQuaternion(quaternion: Quaternion): Vector2 {
-    const {tmpMatrix} = Vector2;
+    const {tmpMatrix4: tmpMatrix} = Vector2;
     tmpMatrix.setQuaternion(quaternion);
     const {x, y} = tmpMatrix._applyVector(this.x, this.y, 0, 0);
     this.set(x, y);
