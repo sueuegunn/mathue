@@ -604,41 +604,54 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   lookAt(position: Vector3, target: Vector3, up: Vector3): Matrix4 {
     const {x: px, y: py, z: pz} = position;
     const {x: ux, y: uy, z: uz} = up;
-    const toPosition = position.clone().subtract(target);
-    const length = toPosition.length();
-    if (length < EPSILON) {
+    let cx = position.x - target.x;
+    let cy = position.y - target.y;
+    let cz = position.z - target.z;
+    const cLength = Math.sqrt(cx ** 2 + cy ** 2 + cz ** 2);
+    if (cLength < EPSILON) {
       return this;
     }
 
-    toPosition.normalize();
-    const {x, y, z} = toPosition;
+    cx /= cLength;
+    cy /= cLength;
+    cz /= cLength;
 
-    const ax = uy * z - uz * y;
-    const ay = uz * x - ux * z;
-    const az = ux * y - uy * x;
-    const a = new Vector3(ax, ay, az).normalize();
+    let ax = uy * cz - uz * cy;
+    let ay = uz * cx - ux * cz;
+    let az = ux * cy - uy * cx;
+    const aLength = Math.sqrt(ax ** 2 + ay ** 2 + az ** 2);
+    if (aLength > 0) {
+      ax /= aLength;
+      ay /= aLength;
+      az /= aLength;
+    }
 
-    const bx = y * a.z - z * a.y;
-    const by = z * a.x - x * a.z;
-    const bz = x * a.y - y * a.x;
-    const b = new Vector3(bx, by, bz).normalize();
+    let bx = cy * az - cz * ay;
+    let by = cz * ax - cx * az;
+    let bz = cx * ay - cy * ax;
+    const bLength = Math.sqrt(bx ** 2 + by ** 2 + bz ** 2);
+    if (bLength > 0) {
+      bx /= bLength;
+      by /= bLength;
+      bz /= bLength;
+    }
 
     this.set(
-      a.x,
-      b.x,
-      x,
+      ax,
+      bx,
+      cx,
       0,
-      a.y,
-      b.y,
-      y,
+      ay,
+      by,
+      cy,
       0,
-      a.z,
-      b.z,
-      z,
+      az,
+      bz,
+      cz,
       0,
-      -(a.x * px + a.y * py + a.z * pz),
-      -(b.x * px + b.y * py + b.z * pz),
-      -(x * px + y * py + z * pz),
+      -(ax * px + ay * py + az * pz),
+      -(bx * px + by * py + bz * pz),
+      -(cx * px + cy * py + cz * pz),
       1
     );
 
