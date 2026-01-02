@@ -209,6 +209,20 @@ describe('Matrix4', () => {
     expect(i).toBeNull();
   });
 
+  it('transpose()', () => {
+    const m = new Matrix4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+    m.transpose();
+
+    const {order} = m;
+    for (const row of range(order)) {
+      for (const column of range(order)) {
+        const element = m.elements[order * column + row];
+        const expected = order * row + column;
+        expect(element).toBe(expected);
+      }
+    }
+  });
+
   it('divide()', () => {
     const m1 = Matrix4.identity();
     const m2 = Matrix4.identity();
@@ -269,6 +283,103 @@ describe('Matrix4', () => {
         } else {
           expect(m.elements[index]).closeTo(0, PRECISION);
         }
+      }
+    }
+  });
+
+  it('lookAt()', () => {
+    const position = new Vector3(0, -1, 0);
+    const target = Vector3.zero();
+    const up = new Vector3(0, 0, 1);
+    const m = Matrix4.identity();
+    m.lookAt(position, target, up);
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 9:
+        case 15:
+          expect(element).closeTo(1, PRECISION);
+          continue;
+        case 6:
+        case 14:
+          expect(element).closeTo(-1, PRECISION);
+          continue;
+        default:
+          expect(element).closeTo(0, PRECISION);
+      }
+    }
+  });
+
+  it('lookAt() does not mutate this when position equals target', () => {
+    const position = Vector3.one();
+    const target = Vector3.one();
+    const up = new Vector3(0, 0, 1);
+    const m = Matrix4.zero();
+    m.lookAt(position, target, up);
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      expect(m.elements[index]).toBe(0);
+    }
+  });
+
+  it('perspective()', () => {
+    const fov = Math.PI / 2;
+    const near = 0.1;
+    const far = 2;
+    const aspect = 1;
+    const m = Matrix4.zero();
+    m.perspective(fov, near, far, aspect);
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 5:
+          expect(element).closeTo(1, PRECISION);
+          continue;
+        case 10:
+        case 11:
+          expect(element).closeTo(-1, PRECISION);
+          continue;
+        case 14:
+          expect(element).closeTo(-0.2, PRECISION);
+          continue;
+        default:
+          expect(element).closeTo(0, PRECISION);
+      }
+    }
+  });
+
+  it('perspective() when far=Infinity', () => {
+    const fov = Math.PI / 2;
+    const near = 0.1;
+    const far = Infinity;
+    const aspect = 1;
+    const m = Matrix4.zero();
+    m.perspective(fov, near, far, aspect);
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 5:
+          expect(element).closeTo(1, PRECISION);
+          continue;
+        case 10:
+        case 11:
+          expect(element).closeTo(-1, PRECISION);
+          continue;
+        case 14:
+          expect(element).closeTo(-0.2, PRECISION);
+          continue;
+        default:
+          expect(element).closeTo(0, PRECISION);
       }
     }
   });

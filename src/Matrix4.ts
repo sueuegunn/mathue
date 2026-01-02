@@ -113,6 +113,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Creates a identity matrix instance
    * @returns new identity matrix instance
    * @group Factory Methods
    * 
@@ -132,6 +133,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Creates a new zero matrix instance
    * @returns new zero matrix instance
    * @group Factory Methods
    * 
@@ -150,6 +152,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Creates new instance has same elements (pure)
    * @returns new cloned matrix instance
    * 
    * @example
@@ -169,6 +172,23 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Sets all elements (mutates this)
+   * @param e00 element in column 0, row 0
+   * @param e01 element in column 0, row 1
+   * @param e02 element in column 0, row 2
+   * @param e03 element in column 0, row 3
+   * @param e10 element in column 1, row 0
+   * @param e11 element in column 1, row 1
+   * @param e12 element in column 1, row 2
+   * @param e13 element in column 1, row 3
+   * @param e20 element in column 2, row 0
+   * @param e21 element in column 2, row 1
+   * @param e22 element in column 2, row 2
+   * @param e23 element in column 2, row 3
+   * @param e30 element in column 3, row 0
+   * @param e31 element in column 3, row 1
+   * @param e32 element in column 3, row 2
+   * @param e33 element in column 3, row 3
    * @returns this instance, for method chaining
    * 
    * @example
@@ -218,6 +238,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Copies all elements from other matrix (mutates this)
+   * @param other other matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -238,6 +260,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Sets identity matrix (mutates this)
    * @returns this instance, for method chaining
    * 
    * @example
@@ -257,7 +280,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * set quaternion to this matrix
+   * Sets rotation matrix from quaternion  (mutates this)
    * @param quaternion
    * @returns this instance, for method chaining
    * 
@@ -307,7 +330,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * @param other 
+   * Adds by other matrix (mutates this)
+   * @param other other matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -331,7 +355,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * @param other 
+   * Subtracts by other matrix (mutates this)
+   * @param other other matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -355,6 +380,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Multiplies all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -378,6 +404,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Divides all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -401,7 +428,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * @param other 
+   * Multiplies this matrix by other matrix (mutates this)
+   * @param other other matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -438,8 +466,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     return this;
   }
 
+
+
   /**
-   * Calculates determinant of this matrix
+   * Calculates determinant of this matrix (pure)
    * @returns determinant of this matrix
    */
   determinant(): number {
@@ -460,7 +490,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * Calculates inverse of this matrix (mutates this)
+   * Sets inverse of this matrix to this instance (mutates this)
    * @returns `this` instance for method chaining if this is invertible, `null` otherwise
    */
   invert(): Matrix4 | null {
@@ -516,7 +546,28 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * Divides this instance by other matrix (mutates this)
+   * Transposes this matrix (mutates this)
+   * @returns this instance, for method chaining
+   */
+  transpose(): Matrix4 {
+    const [_e00, e01, e02, e03, e10, _e11, e12, e13, e20, e21, _e22, e23, e30, e31, e32, _e33] = this.elements;
+    this.elements[1] = e10;
+    this.elements[2] = e20;
+    this.elements[3] = e30;
+    this.elements[4] = e01;
+    this.elements[6] = e21;
+    this.elements[7] = e31;
+    this.elements[8] = e02;
+    this.elements[9] = e12;
+    this.elements[11] = e32;
+    this.elements[12] = e03;
+    this.elements[13] = e13;
+    this.elements[14] = e23;
+    return this;
+  }
+
+  /**
+   * Divides by other matrix (mutates this)
    * @param other other matrix
    * @returns `this` instance for method chaining if other is invertible, `null` otherwise
    */
@@ -530,7 +581,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * apply scale transformation
+   * Sets scale transformation matrix (mutates this)
    * @param scale 3D scale vector
    * @returns this instance, for method chaining
    * 
@@ -559,8 +610,8 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * apply translation transformation
-   * @param translation 3D translation vector
+   * Sets translation transformation matrix (mutates this)
+   * @param translation translation vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -586,7 +637,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
-   * set view transformation matrix
+   * Sets view transformation matrix (mutates this)
    * @param position camera position
    * @param target camera target looking at
    * @param up up vector of camera
@@ -636,30 +687,16 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
       bz /= bLength;
     }
 
-    this.set(
-      ax,
-      bx,
-      cx,
-      0,
-      ay,
-      by,
-      cy,
-      0,
-      az,
-      bz,
-      cz,
-      0,
-      -(ax * px + ay * py + az * pz),
-      -(bx * px + by * py + bz * pz),
-      -(cx * px + cy * py + cz * pz),
-      1
-    );
+    const dx = -(ax * px + ay * py + az * pz);
+    const dy = -(bx * px + by * py + bz * pz);
+    const dz = -(cx * px + cy * py + cz * pz);
+    this.set(ax, bx, cx, 0, ay, by, cy, 0, az, bz, cz, 0, dx, dy, dz, 1);
 
     return this;
   }
 
   /**
-   * set projection matrix of perspective camera
+   * Sets projection matrix of perspective camera (mutates this)
    * @param verticalFov vertical field of view in radians
    * @param near near clipping plane distance
    * @param far far clipping plane distance
@@ -680,10 +717,12 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const f = 1.0 / Math.tan(verticalFov / 2);
     this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
-    if (far === Infinity) {
+    if (far !== Infinity) {
+      console.log('far inf');
       this.elements[10] = -(far + near) / (far - near);
       this.elements[14] = -2 * far * near / (far - near);
     } else {
+      console.log('far not inf');
       this.elements[10] = -1;
       this.elements[14] = -2 * near;
     }
