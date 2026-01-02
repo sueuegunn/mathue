@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {Vector4} from '../src/Vector4';
+import { Matrix4 } from "../src/Matrix4";
+import { Vector3 } from "../src/Vector3";
+import { Quaternion } from "../src/Quaternion";
+
+const PRECISION = 8;
 
 describe('Vector4', () => {
   it('gets x', () => {
@@ -158,5 +163,27 @@ describe('Vector4', () => {
     expect(v.z).toBe(0);
     expect(v.w).toBe(0);
     expect(v.length()).toBe(0);
-  })
+  });
+
+  it('applyMatrix4()', () => {
+    const v = Vector4.one();
+    const m = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+    v.applyMatrix4(m);
+    expect(v.x).closeTo(28, PRECISION);
+    expect(v.y).closeTo(32, PRECISION);
+    expect(v.z).closeTo(36, PRECISION);
+    expect(v.w).closeTo(40, PRECISION);
+  });
+
+  it('applyQuaternion()', () => {
+    const v = Vector4.one();
+    const axis = new Vector3(0, 0, 1);
+    const angle = Math.PI / 2;
+    const q = Quaternion.fromAxisAndAngle(axis, angle);
+    v.applyQuaternion(q);
+    expect(v.x).closeTo(-1, PRECISION);
+    expect(v.y).closeTo(1, PRECISION);
+    expect(v.z).closeTo(1, PRECISION);
+    expect(v.w).closeTo(1, PRECISION);
+  });
 });

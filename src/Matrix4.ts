@@ -712,11 +712,9 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
     if (far !== Infinity) {
-      console.log('far inf');
       this.elements[10] = -(far + near) / (far - near);
       this.elements[14] = -2 * far * near / (far - near);
     } else {
-      console.log('far not inf');
       this.elements[10] = -1;
       this.elements[14] = -2 * near;
     }
@@ -730,10 +728,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     tmpVector.set(x, y, z, w);
 
     const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
-    const xOut = e00 * x + e01 * y + e02 * z + e03 * w;
-    const yOut = e10 * x + e11 * y + e12 * z + e13 * w;
-    const zOut = e20 * x + e21 * y + e22 * z + e23 * w;
-    const wOut = e30 * x + e31 * y + e32 * z + e33 * w;
+    const xOut = e00 * x + e10 * y + e20 * z + e30 * w;
+    const yOut = e01 * x + e11 * y + e21 * z + e31 * w;
+    const zOut = e02 * x + e12 * y + e22 * z + e32 * w;
+    const wOut = e03 * x + e13 * y + e23 * z + e33 * w;
     tmpVector.set(xOut, yOut, zOut, wOut);
 
     return tmpVector;

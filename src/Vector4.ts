@@ -5,6 +5,7 @@ import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
 import { Matrix4 } from "./Matrix4";
 import type { Quaternion } from "./Quaternion";
+import { Matrix3 } from "./Matrix3";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
@@ -349,19 +350,19 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   applyMatrix4(matrix: Matrix4): Vector4 {
-    const {tmpMatrix4: tmpMatrix} = Vector4;
-    tmpMatrix.copy(matrix);
+    const {tmpMatrix4} = Vector4;
+    tmpMatrix4.copy(matrix);
     const {x, y, z, w} = this;
-    const tmpVector = tmpMatrix._applyVector(x, y, z, w);
+    const tmpVector = tmpMatrix4._applyVector(x, y, z, w);
     this.copy(tmpVector);
     return this;
   }
 
   applyQuaternion(quaternion: Quaternion): Vector4 {
-    const {tmpMatrix4: tmpMatrix} = Vector4;
-    tmpMatrix.setQuaternion(quaternion);
+    const {tmpMatrix4} = Vector4;
+    tmpMatrix4.setQuaternion(quaternion);
     const {x, y, z, w} = this;
-    const tmpVector = tmpMatrix._applyVector(x, y, z, w);
+    const tmpVector = tmpMatrix4._applyVector(x, y, z, w);
     this.copy(tmpVector);
     return this;
   }

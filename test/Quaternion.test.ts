@@ -160,4 +160,64 @@ describe('Quaternion', () => {
     const q = new Quaternion(0, 0, 0, 0);
     expect(q.invert()).toBeNull();
   });
+
+  it('divide()', () => {
+    const q = Quaternion.identity();
+    q.divide(Quaternion.identity());
+    expect(q.a).closeTo(1, PRECISION);
+    expect(q.b).closeTo(0, PRECISION);
+    expect(q.c).closeTo(0, PRECISION);
+    expect(q.d).closeTo(0, PRECISION);
+  });
+
+  it('divide() returns null when zero quaternion', () => {
+    const q = Quaternion.identity();
+    const result = q.divide(new Quaternion(0, 0, 0, 0));
+    expect(result).toBeNull();
+  });
+
+  it('multiplyScalar()', () => {
+    const q = new Quaternion(1, 2, 3, 4);
+    q.multiplyScalar(2);
+    expect(q.a).closeTo(2, PRECISION);
+    expect(q.b).closeTo(4, PRECISION);
+    expect(q.c).closeTo(6, PRECISION);
+    expect(q.d).closeTo(8, PRECISION);
+  });
+
+  it('divideScalar()', () => {
+    const q = new Quaternion(2, 4, 6, 8);
+    q.divideScalar(2);
+    expect(q.a).closeTo(1, PRECISION);
+    expect(q.b).closeTo(2, PRECISION);
+    expect(q.c).closeTo(3, PRECISION);
+    expect(q.d).closeTo(4, PRECISION);
+  });
+
+  it('rotateX()', () => {
+    const q = Quaternion.identity();
+    q.rotateX(Math.PI / 2);
+    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.c).closeTo(0, PRECISION);
+    expect(q.d).closeTo(0, PRECISION);
+  });
+
+  it('rotateY()', () => {
+    const q = Quaternion.identity();
+    q.rotateY(Math.PI / 2);
+    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).closeTo(0, PRECISION);
+    expect(q.c).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.d).closeTo(0, PRECISION);
+  });
+
+  it('rotateZ()', () => {
+    const q = Quaternion.identity();
+    q.rotateZ(Math.PI / 2);
+    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).closeTo(0, PRECISION);
+    expect(q.c).closeTo(0, PRECISION);
+    expect(q.d).closeTo(Math.SQRT1_2, PRECISION);
+  });
 });
