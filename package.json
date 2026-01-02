@@ -1,11 +1,12 @@
 {
   "name": "mathue",
-
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/mathue.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,7 +14,6 @@
       "require": "./dist/mathue.cjs"
     }
   },
-
   "homepage": "https://sueuegunn.github.io/mathue",
   "repository": {
     "url": "https://github.com/sueuegunn/mathue"
@@ -33,7 +33,6 @@
     "zero-allocation",
     "performance"
   ],
-
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
