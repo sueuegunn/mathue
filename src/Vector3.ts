@@ -5,6 +5,7 @@ import type { Normalizable } from "./Normalizable";
 import type { Clonable } from "./Clonable";
 import { Matrix4 } from "./Matrix4";
 import type { Quaternion } from "./Quaternion";
+import { Matrix3 } from "./Matrix3";
 
 const INDEX_X = 0;
 const INDEX_Y = 1;
@@ -28,6 +29,14 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    * ```
    */
   readonly elements: [number, number, number];
+
+  private static _tmpMatrix3?: Matrix3;
+  private static get tmpMatrix3(): Matrix3 {
+    if (!this._tmpMatrix3) {
+      this._tmpMatrix3 = Matrix3.identity();
+    }
+    return this._tmpMatrix3;
+  }
 
   private static _tmpMatrix4?: Matrix4
   private static get tmpMatrix4(): Matrix4 {
@@ -117,6 +126,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods
    * 
@@ -131,6 +141,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Creates all ones vector instance
    * @returns new all ones vector instance
    * @group Factory Methods
    * 
@@ -146,6 +157,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Creates new instance has same elements (pure)
    * @returns new cloned vector instance
    * 
    * @example
@@ -161,7 +173,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * determines if this vector is the zero vector (all components are zero)
+   * Determines if this vector is the zero vector (all components are zero)
    * @returns `true` if this vector is exactly zero, `false` otherwise
    * 
    * @example
@@ -178,6 +190,10 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Sets all elements (mutates this)
+   * @param x
+   * @param y
+   * @param z
    * @returns this instance, for method chaining
    * 
    * @example
@@ -195,6 +211,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Copies all elements from other vector (mutates this)
    * @returns this instance, for method chaining
    * 
    * @example
@@ -212,7 +229,8 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * @param other 
+   * Adds by other vector (mutates this)
+   * @param other other vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -232,7 +250,8 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * @param other 
+   * Subtracts by other vector (mutates this)
+   * @param other other vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -252,6 +271,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Multiplies all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -270,6 +290,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Divides all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -288,7 +309,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * calculates the length of this vector
+   * Calculates the length of this vector (pure)
    * @returns the length of this vector (always non-negative)
    * 
    * @example
@@ -303,7 +324,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * normalizes this vector to length 1
+   * Normalizes this vector to length 1 (mutates this)
    * @returns this instance, for method chaining
    * 
    * @example
@@ -322,8 +343,8 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
-   * calculates the cross product of this and other (mutates this)
-   * @param other 
+   * Calculates the cross product of this and other (mutates this)
+   * @param other other vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -350,11 +371,35 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
     return this.set(x, y, z);
   }
 
+  /**
+   * Calculates the cross product of this and other (mutates out)
+   * @param other other vector
+   * @param out vector instance to receive cross
+   * @returns 
+   */
   crossTo(other: Vector3, out: Vector3): Vector3 {
     out.copy(this);
     return out.cross(other);
   }
 
+  /**
+   * Applies matrix to this vector (mutates this)
+   * @param matrix 
+   * @returns this instance, for method chaining
+   */
+  applyMatrix3(matrix: Matrix3): Vector3 {
+    const {tmpMatrix3} = Vector3;
+    tmpMatrix3.copy(matrix);
+    const {x, y, z} = tmpMatrix3._applyVector(this.x, this.y, this.z);
+    this.set(x, y, z);
+    return this;
+  }
+
+  /**
+   * Applies matrix to this vector (mutates this)
+   * @param matrix 
+   * @returns this instance, for method chaining
+   */
   applyMatrix4(matrix: Matrix4): Vector3 {
     const {tmpMatrix4: tmpMatrix} = Vector3;
     tmpMatrix.copy(matrix);
@@ -363,6 +408,11 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
     return this;
   }
 
+  /**
+   * Applies quaternion to this vector (mutates this)
+   * @param quaternion 
+   * @returns this instance, for method chaining
+   */
   applyQuaternion(quaternion: Quaternion): Vector3 {
     const {tmpMatrix4: tmpMatrix} = Vector3;
     tmpMatrix.setQuaternion(quaternion);

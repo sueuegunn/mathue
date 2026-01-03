@@ -141,6 +141,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods
    * 
@@ -155,6 +156,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Creates all ones vector instance
    * @returns new all ones vector instance
    * @group Factory Methods
    * 
@@ -169,6 +171,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Creates new instance has same elements (pure)
    * @returns new cloned vector instance
    * 
    * @example
@@ -184,7 +187,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
-   * determines if this vector is the zero vector (all components are zero)
+   * Determines if this vector is the zero vector (all components are zero)
    * @returns `true` if this vector is exactly zero, `false` otherwise
    * 
    * @example
@@ -201,6 +204,11 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Sets all elements (mutates this)
+   * @param x 
+   * @param y 
+   * @param z 
+   * @param w
    * @returns this instance, for method chaining
    * 
    * @example
@@ -218,6 +226,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Copies all elements from other vector (mutates this)
    * @returns this instance, for method chaining
    * 
    * @example
@@ -235,7 +244,8 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
-   * @param other 
+   * Adds by other vector (mutates this)
+   * @param other other vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -256,7 +266,8 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
-   * @param other 
+   * Subtracts by other vector (mutates this)
+   * @param other other vector
    * @returns this instance, for method chaining
    * 
    * @example
@@ -277,6 +288,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Multiplies all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -296,6 +308,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Divides all elements by scalar (mutates this)
    * @param scalar 
    * @returns this instance, for method chaining
    * 
@@ -315,7 +328,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
-   * calculates the length of this vector
+   * Calculates the length of this vector (pure)
    * @returns the length of this vector (always non-negative)
    * 
    * @example
@@ -330,7 +343,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
-   * normalizes this vector to length 1
+   * Normalizes this vector to length 1 (mutates this)
    * @returns this instance, for method chaining
    * 
    * @example
@@ -348,6 +361,11 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
     return this.divideScalar(length);
   }
 
+  /**
+   * Applies matrix to this vector (mutates this)
+   * @param matrix 
+   * @returns this instance, for method chaining
+   */
   applyMatrix4(matrix: Matrix4): Vector4 {
     const {tmpMatrix4} = Vector4;
     tmpMatrix4.copy(matrix);
@@ -357,6 +375,11 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
     return this;
   }
 
+  /**
+   * Applies quaternion to this vector (mutates this)
+   * @param quaternion 
+   * @returns this instance, for method chaining
+   */
   applyQuaternion(quaternion: Quaternion): Vector4 {
     const {tmpMatrix4} = Vector4;
     tmpMatrix4.setQuaternion(quaternion);

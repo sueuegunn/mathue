@@ -1,5 +1,5 @@
 import type { RangeOptions } from "./functions";
-import type { VectorDimension, LengthOfMatrix, MatrixOrder, TupleOf } from "./types";
+import type { VectorDimension, MatrixOrder, TupleOf } from "./types";
 import type { AdditiveGroup } from "./AdditiveGroup";
 import type { Clonable } from "./Clonable";
 import type { Matrix } from "./Matrix";
@@ -21,7 +21,6 @@ import { range, sum, sumMap } from "./functions";
 // types
 export type {
   VectorDimension,
-  LengthOfMatrix,
   MatrixOrder,
   RangeOptions,
   TupleOf,

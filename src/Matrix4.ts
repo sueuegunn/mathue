@@ -387,7 +387,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @example
    * ```ts
    * const m = Matrix4.identity();
-   * m.scalarMultiply(2);
+   * m.multiplyScalar(2);
    * console.log(m.elements);
    * // [ 2, 0, 0, 0,
    * //   0, 2, 0, 0,

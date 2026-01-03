@@ -8,6 +8,9 @@ import { Vector3 } from "./Vector3";
 
 const EPSILON = 1.0e-8;
 
+/**
+ * 3x3 matrix class. It looks column-major order. And post multiplied.
+ */
 class Matrix3 implements Matrix<3>, AdditiveGroup<Matrix3>, PartialMultiplicativeGroup<Matrix3>, Scalable<Matrix3>, Clonable<Matrix3> {
   /**
    * @example
@@ -287,7 +290,7 @@ class Matrix3 implements Matrix<3>, AdditiveGroup<Matrix3>, PartialMultiplicativ
    * @example
    * ```ts
    * const m = Matrix3.identity();
-   * m.scalarMultiply(2);
+   * m.multiplyScalar(2);
    * console.log(m.elements);
    * // [ 2, 0, 0,
    * //   0, 2, 0,

@@ -391,7 +391,7 @@ class Quaternion implements AdditiveGroup<Quaternion>, PartialMultiplicativeGrou
    * @example
    * ```ts
    * const q = new Quaternion(1, 2, 3, 4);
-   * q.scalarMultiply(2);
+   * q.multiplyScalar(2);
    * console.log(q); // (2, 4, 6, 8)
    * ```
    */
