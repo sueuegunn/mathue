@@ -78,7 +78,7 @@ See the Full Documentation for details.
 
 MIT License
 
-## 🧮 Logo
+## 📐 Logo
 
 <p align="center">
   <img src="typedoc/favicon.ico" width="128">
