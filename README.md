@@ -12,16 +12,22 @@
 
 Pronounced as **"Matthew"** ( mˈæθjuː ).
 
+<br>
+
 ## 🔗 Links
 
 * [Docs](https://sueuegunn.github.io/mathue/index.html)
 * [npm](https://www.npmjs.com/package/mathue)
+
+<br>
 
 ## 🚀 Why mathue?
 
 Standard math libraries often create new objects for every calculation, causing Garbage Collection (GC) spikes that ruin the performance of real-time rendering loops (60fps+).
 
 **mathue is designed to be "Zero-Allocation" by default.**
+
+<br>
 
 ### Key Features
 
@@ -31,11 +37,15 @@ Standard math libraries often create new objects for every calculation, causing 
 *   **ts TypeScript First**: Built completely in TypeScript with full type definitions (`.d.ts`) included.
 *   **🟢 Standalone**: No external dependencies.
 
+<br>
+
 ## 📦 Installation
 
 ```bash
 npm install mathue
 ```
+
+<br>
 
 ## 📖 Usage
 
@@ -69,6 +79,8 @@ model.setIdentity()
   .multiplyScale(scale);
 ```
 
+<br>
+
 ## 📚 API Overview
 
 * Vector
@@ -84,9 +96,13 @@ model.setIdentity()
 
 See the [Full Documentation](https://sueuegunn.github.io/mathue/index.html) for details.
 
+<br>
+
 ## 📄 License
 
 MIT License
+
+<br>
 
 ## 📐 Logo
 
