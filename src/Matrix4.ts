@@ -280,6 +280,64 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Sets scale transformation matrix (mutates this)
+   * @param scale 3D scale vector
+   * @returns this instance, for method chaining
+   * 
+   * @example
+   * ```ts
+   * const m = Matrix4.identity();
+   * const s = new Vector3(2, 3, 4);
+   * m.setScaling(s);
+   * console.log(m.elements);
+   * // [ 2, 0, 0, 0,
+   * //   0, 3, 0, 0,
+   * //   0, 0, 4, 0,
+   * //   0, 0, 0, 1 ]
+   * ```
+   */
+  setScaling(scale: Vector3): Matrix4 {
+    this.setIdentity();
+    const {order} = this;
+    for (const row of range(order)) {
+      const scalar = row === order - 1 ? 1 : scale.elements[row];
+      for (const column of range(order)) {
+        const index = row * order + column;
+        this.elements[index] *= scalar;
+      }
+    }
+    return this;
+  }
+
+  /**
+   * Sets translation transformation matrix (mutates this)
+   * @param translation translation vector
+   * @returns this instance, for method chaining
+   * 
+   * @example
+   * ```ts
+   * const m = Matrix4.identity();
+   * const t = new Vector3(2, 3, 4);
+   * m.setTranslation(t);
+   * console.log(m.elements);
+   * // [ 1, 0, 0, 0,
+   * //   0, 1, 0, 0,
+   * //   0, 0, 1, 0,
+   * //   2, 3, 4, 1 ]
+   * ```
+   */
+  setTranslation(translation: Vector3): Matrix4 {
+    const {x, y, z} = translation;
+    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
+    this.setIdentity();
+    this.elements[12] = e00 * x + e10 * y + e20 * z + e30;
+    this.elements[13] = e01 * x + e11 * y + e21 * z + e31;
+    this.elements[14] = e02 * x + e12 * y + e22 * z + e32;
+    this.elements[15] = e03 * x + e13 * y + e23 * z + e33;
+    return this;
+  }
+
+  /**
    * Sets rotation matrix from quaternion  (mutates this)
    * @param rotation
    * @returns this instance, for method chaining
@@ -572,62 +630,6 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
       return null;
     }
     return this.multiply(tmpMatrix);
-  }
-
-  /**
-   * Sets scale transformation matrix (mutates this)
-   * @param scale 3D scale vector
-   * @returns this instance, for method chaining
-   * 
-   * @example
-   * ```ts
-   * const m = Matrix4.identity();
-   * const s = new Vector3(2, 3, 4);
-   * m.setScaling(s);
-   * console.log(m.elements);
-   * // [ 2, 0, 0, 0,
-   * //   0, 3, 0, 0,
-   * //   0, 0, 4, 0,
-   * //   0, 0, 0, 1 ]
-   * ```
-   */
-  setScaling(scale: Vector3): Matrix4 {
-    const {order} = this;
-    for (const row of range(order)) {
-      const scalar = row === order - 1 ? 1 : scale.elements[row];
-      for (const column of range(order)) {
-        const index = row * order + column;
-        this.elements[index] *= scalar;
-      }
-    }
-    return this;
-  }
-
-  /**
-   * Sets translation transformation matrix (mutates this)
-   * @param translation translation vector
-   * @returns this instance, for method chaining
-   * 
-   * @example
-   * ```ts
-   * const m = Matrix4.identity();
-   * const t = new Vector3(2, 3, 4);
-   * m.setTranslation(t);
-   * console.log(m.elements);
-   * // [ 1, 0, 0, 0,
-   * //   0, 1, 0, 0,
-   * //   0, 0, 1, 0,
-   * //   2, 3, 4, 1 ]
-   * ```
-   */
-  setTranslation(translation: Vector3): Matrix4 {
-    const {x, y, z} = translation;
-    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
-    this.elements[12] = e00 * x + e10 * y + e20 * z + e30;
-    this.elements[13] = e01 * x + e11 * y + e21 * z + e31;
-    this.elements[14] = e02 * x + e12 * y + e22 * z + e32;
-    this.elements[15] = e03 * x + e13 * y + e23 * z + e33;
-    return this;
   }
 
   /**
