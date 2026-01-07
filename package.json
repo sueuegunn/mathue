@@ -20,6 +20,10 @@
   "repository": {
     "url": "https://github.com/sueuegunn/mathue"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/sueuegunn"
+  },
   "keywords": [
     "math",
     "mathematics",
