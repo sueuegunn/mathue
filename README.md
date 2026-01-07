@@ -71,10 +71,18 @@ model.setIdentity()
 
 ## 📚 API Overview
 
-• Vector: Vector1, Vector2, Vector3, Vector4  
-• Matrix: Matrix4 (Column-major order, WebGL compatible)  
-• Quaternion: For rotation without gimbal lock  
-See the Full Documentation for details.
+* Vector
+  * Vector1
+  * Vector2
+  * Vector3
+  * Vector4  
+* Matrix (Column-major order, WebGL compatible)
+  * Matrix3
+  * Matrix4
+* PolarCoordinate3
+* Quaternion (For rotation without gimbal lock)
+
+See the [Full Documentation](https://sueuegunn.github.io/mathue/index.html) for details.
 
 ## 📄 License
 
