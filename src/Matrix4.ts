@@ -525,6 +525,33 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Multiplies scale matrix to this instance (mutates this)
+   * @param scale 3D scale vector
+   * @returns this instance, for method chaining
+   */
+  multiplyScale(scale: Vector3): Matrix4 {
+    return this.multiply(Matrix4.tmpMatrix.setScale(scale));
+  }
+
+  /**
+   * Multiplies translation matrix to this instance (mutates this)
+   * @param position translation vector
+   * @returns this instance, for method chaining
+   */
+  multiplyTranslation(position: Vector3): Matrix4 {
+    return this.multiply(Matrix4.tmpMatrix.setTranslation(position));
+  }
+
+  /**
+   * Multiplies rotation matrix to this instance (mutates this)
+   * @param rotation rotation quaternion
+   * @returns this instance, for method chaining
+   */
+  multiplyRotation(rotation: Quaternion): Matrix4 {
+    return this.multiply(Matrix4.tmpMatrix.setRotation(rotation));
+  }
+
+  /**
    * Calculates determinant of this matrix (pure)
    * @returns determinant of this matrix
    */

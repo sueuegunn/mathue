@@ -383,5 +383,26 @@ describe('Matrix4', () => {
       }
     }
   });
+
+  it('calculates model matrix', () => {
+    const position = new Vector3(1, 2, 3);
+    const axis = new Vector3(0, 0, 1);
+    const angle = Math.PI / 2;
+    const rotation = Quaternion.fromAxisAndAngle(axis, angle);
+    const scale = new Vector3(2, 3, 4);
+
+    const model = Matrix4.identity();
+    model
+      .multiplyTranslation(position)
+      .multiplyRotation(rotation)
+      .multiplyScale(scale);
+
+    const vertex = Vector3.one();
+    vertex.applyMatrix4(model);
+    
+    expect(vertex.x).closeTo(-2, PRECISION);
+    expect(vertex.y).closeTo(4, PRECISION);
+    expect(vertex.z).closeTo(7, PRECISION);
+  });
 });
 

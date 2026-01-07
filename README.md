@@ -58,13 +58,12 @@ const position = new Vector3(1, 2, 3);
 const rotation = Quaternion.identity();
 const scale = new Vector3(2, 2, 2);
 
-const tmp = Matrix4.identity();
 const model = Matrix4.identity();
 
 model.setIdentity()
-  .multiply(tmp.setIdentity().translate(position))
-  .multiply(tmp.setIdentity().setQuaternion(rotation))
-  .multiply(tmp.setIdentity().scale(scale));
+  .multiplyTranslation(position)
+  .multiplyRotation(rotation)
+  .multiplyScale(scale);
 ```
 
 ## 📚 API Overview
