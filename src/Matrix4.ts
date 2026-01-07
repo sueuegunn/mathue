@@ -612,7 +612,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```ts
    * const m = Matrix4.identity();
    * const t = new Vector3(2, 3, 4);
-   * m.translate(t);
+   * m.setTranslation(t);
    * console.log(m.elements);
    * // [ 1, 0, 0, 0,
    * //   0, 1, 0, 0,
@@ -620,7 +620,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   2, 3, 4, 1 ]
    * ```
    */
-  translate(translation: Vector3): Matrix4 {
+  setTranslation(translation: Vector3): Matrix4 {
     const {x, y, z} = translation;
     const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
     this.elements[12] = e00 * x + e10 * y + e20 * z + e30;

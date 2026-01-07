@@ -267,9 +267,9 @@ describe('Matrix4', () => {
     }
   });
 
-  it('translate()', () => {
+  it('setTranslation()', () => {
       const m = Matrix4.identity();
-      m.translate(new Vector3(2, 3, 4));
+      m.setTranslation(new Vector3(2, 3, 4));
 
       const {order} = m;
     for (const row of range(order)) {
