@@ -249,9 +249,9 @@ describe('Matrix4', () => {
     expect(result).toBeNull();
   });
 
-  it('scale()', () => {
+  it('setScaling()', () => {
     const m = Matrix4.identity();
-    m.scale(new Vector3(2, 3, 4));
+    m.setScaling(new Vector3(2, 3, 4));
     
     const {order} = m;
     for (const row of range(order)) {

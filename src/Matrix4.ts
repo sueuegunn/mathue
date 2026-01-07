@@ -583,7 +583,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * ```ts
    * const m = Matrix4.identity();
    * const s = new Vector3(2, 3, 4);
-   * m.scale(s);
+   * m.setScaling(s);
    * console.log(m.elements);
    * // [ 2, 0, 0, 0,
    * //   0, 3, 0, 0,
@@ -591,7 +591,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   0, 0, 0, 1 ]
    * ```
    */
-  scale(scale: Vector3): Matrix4 {
+  setScaling(scale: Vector3): Matrix4 {
     const {order} = this;
     for (const row of range(order)) {
       const scalar = row === order - 1 ? 1 : scale.elements[row];
