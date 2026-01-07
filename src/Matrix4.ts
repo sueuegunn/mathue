@@ -281,14 +281,14 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
 
   /**
    * Sets rotation matrix from quaternion  (mutates this)
-   * @param quaternion
+   * @param rotation
    * @returns this instance, for method chaining
    * 
    * @example
    * ```ts
    * const m = Matrix4.zero();
    * const q = Quaternion.identity();
-   * m.setQuaternion(q);
+   * m.setRotation(q);
    * console.log(m.elements);
    * // [ 0, 0, 0, 0,
    * //   0, 0, 0, 0,
@@ -296,9 +296,9 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * //   0, 0, 0, 0 ]
    * ```
    */
-  setQuaternion(quaternion: Quaternion): Matrix4 {
-    const {a, b, c, d} = quaternion;
-    const s = 2 / quaternion.squaredNorm();
+  setRotation(rotation: Quaternion): Matrix4 {
+    const {a, b, c, d} = rotation;
+    const s = 2 / rotation.squaredNorm();
     const b2 = b ** 2;
     const c2 = c ** 2;
     const d2 = d ** 2;

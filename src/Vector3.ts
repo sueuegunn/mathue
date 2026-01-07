@@ -415,7 +415,7 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
    */
   applyQuaternion(quaternion: Quaternion): Vector3 {
     const {tmpMatrix4: tmpMatrix} = Vector3;
-    tmpMatrix.setQuaternion(quaternion);
+    tmpMatrix.setRotation(quaternion);
     const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
     this.set(x, y, z);
     return this;

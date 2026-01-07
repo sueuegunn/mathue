@@ -76,12 +76,12 @@ describe('Matrix4', () => {
     }
   });
 
-  it('setQuaternion()', () => {
+  it('setRotation()', () => {
     const axis = new Vector3(1, 0, 0);
     const radian = Math.PI / 2;
     const q = Quaternion.fromAxisAndAngle(axis, radian);
     const m = Matrix4.identity();
-    m.setQuaternion(q);
+    m.setRotation(q);
     const v = new Vector3(0, 1, 0);
     v.applyMatrix4(m);
     expect(v.x).closeTo(0, PRECISION);

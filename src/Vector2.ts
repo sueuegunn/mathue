@@ -364,7 +364,7 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
    */
   applyQuaternion(quaternion: Quaternion): Vector2 {
     const {tmpMatrix4} = Vector2;
-    tmpMatrix4.setQuaternion(quaternion);
+    tmpMatrix4.setRotation(quaternion);
     const {x, y} = tmpMatrix4._applyVector(this.x, this.y, 0, 0);
     this.set(x, y);
     return this;
