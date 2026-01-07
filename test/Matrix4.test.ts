@@ -76,12 +76,12 @@ describe('Matrix4', () => {
     }
   });
 
-  it('setQuaternion()', () => {
+  it('setRotation()', () => {
     const axis = new Vector3(1, 0, 0);
     const radian = Math.PI / 2;
     const q = Quaternion.fromAxisAndAngle(axis, radian);
     const m = Matrix4.identity();
-    m.setQuaternion(q);
+    m.setRotation(q);
     const v = new Vector3(0, 1, 0);
     v.applyMatrix4(m);
     expect(v.x).closeTo(0, PRECISION);
@@ -249,9 +249,9 @@ describe('Matrix4', () => {
     expect(result).toBeNull();
   });
 
-  it('scale()', () => {
+  it('setScale()', () => {
     const m = Matrix4.identity();
-    m.scale(new Vector3(2, 3, 4));
+    m.setScale(new Vector3(2, 3, 4));
     
     const {order} = m;
     for (const row of range(order)) {
@@ -267,9 +267,9 @@ describe('Matrix4', () => {
     }
   });
 
-  it('translate()', () => {
+  it('setTranslation()', () => {
       const m = Matrix4.identity();
-      m.translate(new Vector3(2, 3, 4));
+      m.setTranslation(new Vector3(2, 3, 4));
 
       const {order} = m;
     for (const row of range(order)) {
@@ -382,6 +382,27 @@ describe('Matrix4', () => {
           expect(element).closeTo(0, PRECISION);
       }
     }
+  });
+
+  it('calculates model matrix', () => {
+    const position = new Vector3(1, 2, 3);
+    const axis = new Vector3(0, 0, 1);
+    const angle = Math.PI / 2;
+    const rotation = Quaternion.fromAxisAndAngle(axis, angle);
+    const scale = new Vector3(2, 3, 4);
+
+    const model = Matrix4.identity();
+    model
+      .multiplyTranslation(position)
+      .multiplyRotation(rotation)
+      .multiplyScale(scale);
+
+    const vertex = Vector3.one();
+    vertex.applyMatrix4(model);
+    
+    expect(vertex.x).closeTo(-2, PRECISION);
+    expect(vertex.y).closeTo(4, PRECISION);
+    expect(vertex.z).closeTo(7, PRECISION);
   });
 });
 

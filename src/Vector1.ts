@@ -310,7 +310,7 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
    */
   applyQuaternion(quaternion: Quaternion): Vector1 {
     const {tmpMatrix4} = Vector1;
-    tmpMatrix4.setQuaternion(quaternion);
+    tmpMatrix4.setRotation(quaternion);
     const {x} = tmpMatrix4._applyVector(this.x, 0, 0, 0);
     this.set(x);
     return this;

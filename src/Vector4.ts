@@ -382,7 +382,7 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
    */
   applyQuaternion(quaternion: Quaternion): Vector4 {
     const {tmpMatrix4} = Vector4;
-    tmpMatrix4.setQuaternion(quaternion);
+    tmpMatrix4.setRotation(quaternion);
     const {x, y, z, w} = this;
     const tmpVector = tmpMatrix4._applyVector(x, y, z, w);
     this.copy(tmpVector);

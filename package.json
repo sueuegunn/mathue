@@ -1,6 +1,8 @@
 {
   "name": "mathue",
-  "version": "0.1.0",
+  "description": "TypeScript math library",
+  "version": "0.1.1",
+  "license": "MIT",
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/mathue.js",
@@ -17,6 +19,10 @@
   "homepage": "https://sueuegunn.github.io/mathue",
   "repository": {
     "url": "https://github.com/sueuegunn/mathue"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/sueuegunn"
   },
   "keywords": [
     "math",

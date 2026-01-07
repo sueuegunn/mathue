@@ -6,19 +6,28 @@
 [![Test](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml/badge.svg?event=push)](https://github.com/sueuegunn/mathue/actions/workflows/test.yaml)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/badge.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-![Release](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/sueuegunn/80c9611c9abb9cef2cd1a4064003cb5f/raw/mathue-release-version.json)
+[![npm version](https://img.shields.io/npm/v/mathue?colorB=brightgreen)](https://www.npmjs.com/package/mathue)
 
 **A high-performance TypeScript math library specially optimized for WebGL applications.**
 
 Pronounced as **"Matthew"** ( mˈæθjuː ).
 
-[Docs](https://sueuegunn.github.io/mathue/index.html)
+<br>
+
+## 🔗 Links
+
+* [Docs](https://sueuegunn.github.io/mathue/index.html)
+* [npm](https://www.npmjs.com/package/mathue)
+
+<br>
 
 ## 🚀 Why mathue?
 
 Standard math libraries often create new objects for every calculation, causing Garbage Collection (GC) spikes that ruin the performance of real-time rendering loops (60fps+).
 
 **mathue is designed to be "Zero-Allocation" by default.**
+
+<br>
 
 ### Key Features
 
@@ -28,11 +37,15 @@ Standard math libraries often create new objects for every calculation, causing 
 *   **ts TypeScript First**: Built completely in TypeScript with full type definitions (`.d.ts`) included.
 *   **🟢 Standalone**: No external dependencies.
 
+<br>
+
 ## 📦 Installation
 
 ```bash
 npm install mathue
 ```
+
+<br>
 
 ## 📖 Usage
 
@@ -58,27 +71,40 @@ const position = new Vector3(1, 2, 3);
 const rotation = Quaternion.identity();
 const scale = new Vector3(2, 2, 2);
 
-const tmp = Matrix4.identity();
 const model = Matrix4.identity();
 
 model.setIdentity()
-  .multiply(tmp.setIdentity().translate(position))
-  .multiply(tmp.setIdentity().setQuaternion(rotation))
-  .multiply(tmp.setIdentity().scale(scale));
+  .multiplyTranslation(position)
+  .multiplyRotation(rotation)
+  .multiplyScale(scale);
 ```
+
+<br>
 
 ## 📚 API Overview
 
-• Vector: Vector1, Vector2, Vector3, Vector4  
-• Matrix: Matrix4 (Column-major order, WebGL compatible)  
-• Quaternion: For rotation without gimbal lock  
-See the Full Documentation for details.
+* Vector
+  * Vector1
+  * Vector2
+  * Vector3
+  * Vector4  
+* Matrix (Column-major order, WebGL compatible)
+  * Matrix3
+  * Matrix4
+* PolarCoordinate3
+* Quaternion (For rotation without gimbal lock)
+
+See the [Full Documentation](https://sueuegunn.github.io/mathue/index.html) for details.
+
+<br>
 
 ## 📄 License
 
 MIT License
 
-## 🧮 Logo
+<br>
+
+## 📐 Logo
 
 <p align="center">
   <img src="typedoc/favicon.ico" width="128">
