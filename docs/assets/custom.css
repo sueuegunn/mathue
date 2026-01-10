@@ -29,6 +29,18 @@ h4[id^="example"] {
   margin-bottom: 6px;
 }
 
+footer {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .site-menu, .page-menu {
+    max-height: calc(
+      100vh - var(--dim-header-height) - 2 * var(--dim-container-main-margin-y)
+    );
+  }
+}
+
 div.container {
   padding: 0 10px;
 }
