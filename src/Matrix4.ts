@@ -11,6 +11,23 @@ import { Vector4 } from "./Vector4";
 const EPSILON = 1.0e-8;
 
 /**
+ * Options for generating a perspective projection matrix.
+ */
+type PerspectiveOptions = {
+  /**
+   * Determines the normalized device coordinate (NDC) Z range for the clip planes. [1, 2]
+   * 
+   * - `false` (default): Corresponds to a Z range of **[-1, 1]**, which matches the clip volume 
+   *   requirements for **WebGL and OpenGL**. [1]
+   * - `true`: Corresponds to a Z range of ****, which matches the clip volume 
+   *   requirements for modern APIs such as **WebGPU, Vulkan, DirectX, and Metal**. [2]
+   * 
+   * @default false
+   */
+  depthZeroToOne?: boolean;
+};
+
+/**
  * 4x4 matrix class. It looks column-major order. And post multiplied.
  */
 class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativeGroup<Matrix4>, Scalable<Matrix4>, Clonable<Matrix4> {
@@ -724,6 +741,7 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * @param near near clipping plane distance
    * @param far far clipping plane distance
    * @param aspect aspect ratio (width / height)
+   * @param options options for perspective projection matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -733,19 +751,34 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * const near = 0.01;
    * const far = 4.0;
    * const aspect = 300 / 150;
+   * 
+   * // for OpenGL, WebGL
    * m.perspective(fov, near, far, aspect);
+   * 
+   * // for WebGPU, Vulkan, DirectX, Metal
+   * m.perspective(fov, near, far, aspect, {depthZeroToOne: true});
    * ```
    */
-  perspective(verticalFov: number, near: number, far: number, aspect: number): Matrix4 {
+  perspective(
+    verticalFov: number,
+    near: number,
+    far: number,
+    aspect: number,
+    options?: PerspectiveOptions
+  ): Matrix4 {
     const f = 1.0 / Math.tan(verticalFov / 2);
     this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
+    const depthZeroToOne = options?.depthZeroToOne ?? false;
+    const coefficient = depthZeroToOne ? 1 : 2;
+
     if (far !== Infinity) {
-      this.elements[10] = -(far + near) / (far - near);
-      this.elements[14] = -2 * far * near / (far - near);
+      const numerator = depthZeroToOne ? far : (far + near);
+      this.elements[10] = -numerator / (far - near);
+      this.elements[14] = -coefficient * far * near / (far - near);
     } else {
       this.elements[10] = -1;
-      this.elements[14] = -2 * near;
+      this.elements[14] = -coefficient * near;
     }
 
     return this;
@@ -768,3 +801,4 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
 }
 
 export {Matrix4};
+export type {PerspectiveOptions};

@@ -355,6 +355,38 @@ describe('Matrix4', () => {
     }
   });
 
+  it('perspective() for WebGPU', () => {
+    const fov = Math.PI / 2;
+    const near = 0.1;
+    const far = 2;
+    const aspect = 1;
+    const m = Matrix4.zero();
+    m.perspective(fov, near, far, aspect, {depthZeroToOne: true});
+
+    const expected10 = -far / (far - near);
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 5:
+          expect(element).closeTo(1, PRECISION);
+          continue;
+        case 10:
+          expect(element).closeTo(expected10, PRECISION);
+          continue;
+        case 11:
+          expect(element).closeTo(-1, PRECISION);
+          continue;
+        case 14:
+          expect(element).closeTo(expected10 / 10, PRECISION);
+          continue;
+        default:
+          expect(element).closeTo(0, PRECISION);
+      }
+    }
+  });
+
   it('perspective() when far=Infinity', () => {
     const fov = Math.PI / 2;
     const near = 0.1;
