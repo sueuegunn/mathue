@@ -9,11 +9,12 @@ import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import { Vector4 } from "./Vector4";
 
 const EPSILON = 1.0e-8;
+const DEFAULT_DEPTH_ZERO_TO_ONE = false;
 
 /**
- * Options for generating a perspective projection matrix.
+ * Options for generating a projection matrix.
  */
-type PerspectiveOptions = {
+type ProjectionOptions = {
   /**
    * Determines the normalized device coordinate (NDC) Z range for the clip planes. [1, 2]
    * 
@@ -736,6 +737,39 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Sets projection matrix of orthographic camera (mutates this)
+   * @param left left boundary of the view frustum (negative X coordinate)
+   * @param right right boundary of the view frustum (positive X coordinate)
+   * @param bottom bottom boundary of the view frustum (negative Y coordinate)
+   * @param top top boundary of the view frustum (positive Y coordinate)
+   * @param near near clipping plane distance (positive value)
+   * @param far far clipping plane distance (positive value)
+   * @param options options for orthographic projection matrix
+   * @returns this instance, for method chaining
+   */
+  orthographic(
+    left: number,
+    right: number,
+    bottom: number,
+    top: number,
+    near: number,
+    far: number,
+    options?: ProjectionOptions
+  ): Matrix4 {
+    const depthZeroToOne = options?.depthZeroToOne ?? DEFAULT_DEPTH_ZERO_TO_ONE;
+
+    const width = right - left;
+    const height = top - bottom;
+    const depth = far - near;
+    const e10 = (depthZeroToOne ? -1 : -2) / depth;
+    const e12 = -(right + left) / width;
+    const e13 = -(top + bottom) / height;
+    const e14 = (depthZeroToOne ? -near : -(far + near)) / depth;
+    this.set(2 / width, 0, 0, 0, 0, 2 / height, 0, 0, 0, 0, e10, 0, e12, e13, e14, 1);
+    return this;
+  }
+
+  /**
    * Sets projection matrix of perspective camera (mutates this)
    * @param verticalFov vertical field of view in radians
    * @param near near clipping plane distance
@@ -764,12 +798,12 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     near: number,
     far: number,
     aspect: number,
-    options?: PerspectiveOptions
+    options?: ProjectionOptions
   ): Matrix4 {
     const f = 1.0 / Math.tan(verticalFov / 2);
     this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
-    const depthZeroToOne = options?.depthZeroToOne ?? false;
+    const depthZeroToOne = options?.depthZeroToOne ?? DEFAULT_DEPTH_ZERO_TO_ONE;
     const coefficient = depthZeroToOne ? 1 : 2;
 
     if (far !== Infinity) {
@@ -801,4 +835,4 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
 }
 
 export {Matrix4};
-export type {PerspectiveOptions};
+export type {ProjectionOptions};

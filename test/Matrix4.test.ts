@@ -4,7 +4,7 @@ import { Vector3 } from "../src/Vector3";
 import { range } from "../src/functions";
 import { Quaternion } from "../src/Quaternion";
 
-const PRECISION = 8;
+const PRECISION = 6;
 
 describe('Matrix4', () => {
   it('identity()', () => {
@@ -326,6 +326,68 @@ describe('Matrix4', () => {
     }
   });
 
+  it('orthographic()', () => {
+    const left = -1;
+    const right = 1;
+    const bottom = -1;
+    const top = 1;
+    const near = 0.1;
+    const far = 2;
+    const m = Matrix4.zero();
+    m.orthographic(left, right, bottom, top, near, far);
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 5:
+        case 15:
+          expect(element).toBeCloseTo(1, PRECISION);
+          continue;
+        case 10:
+          expect(element).toBeCloseTo(-2 / 1.9, PRECISION);
+          continue;
+        case 14:
+          expect(element).toBeCloseTo(-2.1 / 1.9, PRECISION);
+          continue;
+        default:
+          expect(element).toBeCloseTo(0, PRECISION);
+      }
+    }
+  });
+
+  it('orthographic() for WebGPU', () => {
+    const left = -1;
+    const right = 1;
+    const bottom = -1;
+    const top = 1;
+    const near = 0.1;
+    const far = 2;
+    const m = Matrix4.zero();
+    m.orthographic(left, right, bottom, top, near, far, {depthZeroToOne: true});
+
+    const {order} = m;
+    for (const index of range(order ** 2)) {
+      const element = m.elements[index];
+      switch(index) {
+        case 0:
+        case 5:
+        case 15:
+          expect(element).toBeCloseTo(1, PRECISION);
+          continue;
+        case 10:
+          expect(element).toBeCloseTo(-1 / 1.9, PRECISION);
+          continue;
+        case 14:
+          expect(element).toBeCloseTo(-0.1 / 1.9, PRECISION);
+          continue;
+        default:
+          expect(element).toBeCloseTo(0, PRECISION);
+      }
+    }
+  });
+
   it('perspective()', () => {
     const fov = Math.PI / 2;
     const near = 0.1;
@@ -340,17 +402,19 @@ describe('Matrix4', () => {
       switch(index) {
         case 0:
         case 5:
-          expect(element).closeTo(1, PRECISION);
+          expect(element).toBeCloseTo(1, PRECISION);
           continue;
         case 10:
+          expect(element).toBeCloseTo(-2.1 / 1.9, PRECISION);
+          continue;
         case 11:
-          expect(element).closeTo(-1, PRECISION);
+          expect(element).toBeCloseTo(-1, PRECISION);
           continue;
         case 14:
-          expect(element).closeTo(-0.2, PRECISION);
+          expect(element).toBeCloseTo(-0.4 / 1.9, PRECISION);
           continue;
         default:
-          expect(element).closeTo(0, PRECISION);
+          expect(element).toBeCloseTo(0, PRECISION);
       }
     }
   });
@@ -401,17 +465,17 @@ describe('Matrix4', () => {
       switch(index) {
         case 0:
         case 5:
-          expect(element).closeTo(1, PRECISION);
+          expect(element).toBeCloseTo(1, PRECISION);
           continue;
         case 10:
         case 11:
-          expect(element).closeTo(-1, PRECISION);
+          expect(element).toBeCloseTo(-1, PRECISION);
           continue;
         case 14:
-          expect(element).closeTo(-0.2, PRECISION);
+          expect(element).toBeCloseTo(-0.2, PRECISION);
           continue;
         default:
-          expect(element).closeTo(0, PRECISION);
+          expect(element).toBeCloseTo(0, PRECISION);
       }
     }
   });
