@@ -45,7 +45,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "version:major": "npm version major --git-tag-version false",
+    "version:minor": "npm version minor --git-tag-version false",
+    "version:patch": "npm version patch --git-tag-version false"
   },
   "devDependencies": {
     "@types/node": "^24.9.2",
