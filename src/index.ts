@@ -1,3 +1,4 @@
+import type { ApplyMatrix4Options } from "./Vector3";
 import type { RangeOptions } from "./functions";
 import type { VectorDimension, MatrixOrder, TupleOf } from "./types";
 import type { AdditiveGroup } from "./AdditiveGroup";
@@ -21,6 +22,7 @@ import { range, sum, sumMap } from "./functions";
 
 // types
 export type {
+  ApplyMatrix4Options,
   VectorDimension,
   MatrixOrder,
   ProjectionOptions,
