@@ -151,7 +151,7 @@ describe('Matrix4', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(m.elements[index]).closeTo(0.5, PRECISION);
+          expect(m.elements[index]).toBeCloseTo(0.5, PRECISION);
         } else {
           expect(m.elements[index]).toBe(0);
         }
@@ -195,9 +195,9 @@ describe('Matrix4', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(i.elements[index]).closeTo(1, PRECISION);
+          expect(i.elements[index]).toBeCloseTo(1, PRECISION);
         } else {
-          expect(i.elements[index]).closeTo(0, PRECISION);
+          expect(i.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }
@@ -234,9 +234,9 @@ describe('Matrix4', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(m1.elements[index]).closeTo(1, PRECISION);
+          expect(m1.elements[index]).toBeCloseTo(1, PRECISION);
         } else {
-          expect(m1.elements[index]).closeTo(0, PRECISION);
+          expect(m1.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }
@@ -301,14 +301,14 @@ describe('Matrix4', () => {
         case 0:
         case 9:
         case 15:
-          expect(element).closeTo(1, PRECISION);
+          expect(element).toBeCloseTo(1, PRECISION);
           continue;
         case 6:
         case 14:
-          expect(element).closeTo(-1, PRECISION);
+          expect(element).toBeCloseTo(-1, PRECISION);
           continue;
         default:
-          expect(element).closeTo(0, PRECISION);
+          expect(element).toBeCloseTo(0, PRECISION);
       }
     }
   });
@@ -434,19 +434,19 @@ describe('Matrix4', () => {
       switch(index) {
         case 0:
         case 5:
-          expect(element).closeTo(1, PRECISION);
+          expect(element).toBeCloseTo(1, PRECISION);
           continue;
         case 10:
-          expect(element).closeTo(expected10, PRECISION);
+          expect(element).toBeCloseTo(expected10, PRECISION);
           continue;
         case 11:
-          expect(element).closeTo(-1, PRECISION);
+          expect(element).toBeCloseTo(-1, PRECISION);
           continue;
         case 14:
-          expect(element).closeTo(expected10 / 10, PRECISION);
+          expect(element).toBeCloseTo(expected10 / 10, PRECISION);
           continue;
         default:
-          expect(element).closeTo(0, PRECISION);
+          expect(element).toBeCloseTo(0, PRECISION);
       }
     }
   });
