@@ -17,4 +17,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - run: npm publish --provenance --access public --registry=https://registry.npmjs.org/
+      - name: Publish to npm
+        run: |
+          npm install -g npm@latest
+          rm -f .npmrc
+          npm publish --provenance --access public --registry=https://registry.npmjs.org/
