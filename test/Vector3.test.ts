@@ -1,5 +1,8 @@
 import {describe, expect, it} from "vitest";
 import {Vector3} from '../src/Vector3';
+import { Matrix4 } from "../src/Matrix4";
+
+const PRECISION = 8;
 
 describe('Vector3', () => {
   it('gets x', () => {
@@ -124,9 +127,9 @@ describe('Vector3', () => {
   it('normalize()', () => {
     const v = new Vector3(2, 3, 6);
     v.normalize();
-    expect(v.x).closeTo(2 / 7, 4);
-    expect(v.y).closeTo(3 / 7, 4);
-    expect(v.z).closeTo(6 / 7, 4);
+    expect(v.x).toBeCloseTo(2 / 7, 4);
+    expect(v.y).toBeCloseTo(3 / 7, 4);
+    expect(v.z).toBeCloseTo(6 / 7, 4);
   });
 
   it('normalize() does not change zero vector', () => {
@@ -155,5 +158,25 @@ describe('Vector3', () => {
     expect(v3.x).toBe(-3);
     expect(v3.y).toBe(6);
     expect(v3.z).toBe(-3);
+  });
+
+  it('applyMatrix4()', () => {
+    const m = new Matrix4(1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4);
+    const v = new Vector3(1, 2, 3);
+    v.applyMatrix4(m);
+
+    expect(v.x).toBeCloseTo(1 / 4, PRECISION);
+    expect(v.y).toBeCloseTo(4 / 4, PRECISION);
+    expect(v.z).toBeCloseTo(9 / 4, PRECISION);
+  });
+
+  it('applyMatrix4() as point', () => {
+    const m = new Matrix4(1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4);
+    const v = new Vector3(1, 2, 3);
+    v.applyMatrix4(m, {asDirection: true});
+
+    expect(v.x).toBeCloseTo(1, PRECISION);
+    expect(v.y).toBeCloseTo(4, PRECISION);
+    expect(v.z).toBeCloseTo(9, PRECISION);
   });
 });

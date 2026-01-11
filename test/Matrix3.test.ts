@@ -136,7 +136,7 @@ describe('Matrix3', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(m.elements[index]).closeTo(0.5, PRECISION);
+          expect(m.elements[index]).toBeCloseTo(0.5, PRECISION);
         } else {
           expect(m.elements[index]).toBe(0);
         }
@@ -180,9 +180,9 @@ describe('Matrix3', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(i.elements[index]).closeTo(1, PRECISION);
+          expect(i.elements[index]).toBeCloseTo(1, PRECISION);
         } else {
-          expect(i.elements[index]).closeTo(0, PRECISION);
+          expect(i.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }
@@ -219,9 +219,9 @@ describe('Matrix3', () => {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(m1.elements[index]).closeTo(1, PRECISION);
+          expect(m1.elements[index]).toBeCloseTo(1, PRECISION);
         } else {
-          expect(m1.elements[index]).closeTo(0, PRECISION);
+          expect(m1.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }

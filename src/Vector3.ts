@@ -11,6 +11,23 @@ const INDEX_X = 0;
 const INDEX_Y = 1;
 const INDEX_Z = 2;
 
+const DEFAULT_AS_DIRECTION = false;
+
+/**
+ * Options for transforming a 3D vector by a 4x4 matrix.
+ */
+type ApplyMatrix4Options = {
+  /**
+   * Determines whether the vector is treated as a direction or a point.
+   * 
+   * - `true`: Treated as a **direction** (w = 0).
+   * - `false` (default): Treated as a **point** (w = 1).
+   * 
+   * @default false
+   */
+  asDirection?: boolean;
+};
+
 class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, Normalizable<Vector3>, Clonable<Vector3> {
   /**
    * @example
@@ -398,13 +415,22 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   /**
    * Applies matrix to this vector (mutates this)
    * @param matrix 
+   * @param options 
    * @returns this instance, for method chaining
    */
-  applyMatrix4(matrix: Matrix4): Vector3 {
-    const {tmpMatrix4: tmpMatrix} = Vector3;
-    tmpMatrix.copy(matrix);
-    const {x, y, z} = tmpMatrix._applyVector(this.x, this.y, this.z, 0);
-    this.set(x, y, z);
+  applyMatrix4(matrix: Matrix4, options?: ApplyMatrix4Options): Vector3 {
+    const {tmpMatrix4} = Vector3;
+    tmpMatrix4.copy(matrix);
+
+    const asDirection = options?.asDirection ?? DEFAULT_AS_DIRECTION;
+    const beforeW = asDirection ? 0 : 1;
+
+    const {x, y, z, w} = tmpMatrix4._applyVector(this.x, this.y, this.z, beforeW);
+
+    const afterX = asDirection || w === 0 ? x : x / w;
+    const afterY = asDirection || w === 0 ? y : y / w;
+    const afterZ = asDirection || w === 0 ? z : z / w;
+    this.set(afterX, afterY, afterZ);
     return this;
   }
 
@@ -423,3 +449,4 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
 }
 
 export {Vector3};
+export type {ApplyMatrix4Options};

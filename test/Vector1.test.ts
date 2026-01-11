@@ -97,14 +97,14 @@ describe('Vector1', () => {
     const v = Vector1.one();
     const m = new Matrix3(1, 2, 3, 4, 5, 6, 7, 8, 9);
     v.applyMatrix3(m);
-    expect(v.x).closeTo(1, PRECISION);
+    expect(v.x).toBeCloseTo(1, PRECISION);
   });
 
   it('applyMatrix4()', () => {
     const v = Vector1.one();
     const m = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     v.applyMatrix4(m);
-    expect(v.x).closeTo(1, PRECISION);
+    expect(v.x).toBeCloseTo(1, PRECISION);
   });
 
   it('applyQuaternion()', () => {
@@ -113,6 +113,6 @@ describe('Vector1', () => {
     const angle = Math.PI / 2;
     const q = Quaternion.fromAxisAndAngle(axis, angle);
     v.applyQuaternion(q);
-    expect(v.x).closeTo(0, PRECISION);
+    expect(v.x).toBeCloseTo(0, PRECISION);
   });
 });

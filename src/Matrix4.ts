@@ -9,6 +9,24 @@ import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
 import { Vector4 } from "./Vector4";
 
 const EPSILON = 1.0e-8;
+const DEFAULT_DEPTH_ZERO_TO_ONE = false;
+
+/**
+ * Options for generating a projection matrix.
+ */
+type ProjectionOptions = {
+  /**
+   * Determines the normalized device coordinate (NDC) Z range for the clip planes. [1, 2]
+   * 
+   * - `false` (default): Corresponds to a Z range of **[-1, 1]**, which matches the clip volume 
+   *   requirements for **WebGL and OpenGL**. [1]
+   * - `true`: Corresponds to a Z range of ****, which matches the clip volume 
+   *   requirements for modern APIs such as **WebGPU, Vulkan, DirectX, and Metal**. [2]
+   * 
+   * @default false
+   */
+  depthZeroToOne?: boolean;
+};
 
 /**
  * 4x4 matrix class. It looks column-major order. And post multiplied.
@@ -328,12 +346,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   setTranslation(translation: Vector3): Matrix4 {
     const {x, y, z} = translation;
-    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
     this.setIdentity();
-    this.elements[12] = e00 * x + e10 * y + e20 * z + e30;
-    this.elements[13] = e01 * x + e11 * y + e21 * z + e31;
-    this.elements[14] = e02 * x + e12 * y + e22 * z + e32;
-    this.elements[15] = e03 * x + e13 * y + e23 * z + e33;
+    this.elements[12] = x;
+    this.elements[13] = y;
+    this.elements[14] = z;
     return this;
   }
 
@@ -368,15 +384,15 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const cd = c * d;
     this.set(
       1 - s * (c2 + d2),
-      s * (bc - ad),
-      s * (bd + ac),
+      -s * (bc - ad),
+      -s * (bd + ac),
       0,
-      s * (bc + ad),
+      -s * (bc + ad),
       1 - s * (b2 + d2),
-      s * (cd - ab),
+      -s * (cd - ab),
       0,
-      s * (bd - ac),
-      s * (cd + ab),
+      -s * (bd - ac),
+      -s * (cd + ab),
       1 - s * (b2 + c2),
       0,
       0,
@@ -719,11 +735,45 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
   }
 
   /**
+   * Sets projection matrix of orthographic camera (mutates this)
+   * @param left left boundary of the view frustum (negative X coordinate)
+   * @param right right boundary of the view frustum (positive X coordinate)
+   * @param bottom bottom boundary of the view frustum (negative Y coordinate)
+   * @param top top boundary of the view frustum (positive Y coordinate)
+   * @param near near clipping plane distance (positive value)
+   * @param far far clipping plane distance (positive value)
+   * @param options options for orthographic projection matrix
+   * @returns this instance, for method chaining
+   */
+  orthographic(
+    left: number,
+    right: number,
+    bottom: number,
+    top: number,
+    near: number,
+    far: number,
+    options?: ProjectionOptions
+  ): Matrix4 {
+    const depthZeroToOne = options?.depthZeroToOne ?? DEFAULT_DEPTH_ZERO_TO_ONE;
+
+    const width = right - left;
+    const height = top - bottom;
+    const depth = far - near;
+    const e10 = (depthZeroToOne ? -1 : -2) / depth;
+    const e12 = -(right + left) / width;
+    const e13 = -(top + bottom) / height;
+    const e14 = (depthZeroToOne ? -near : -(far + near)) / depth;
+    this.set(2 / width, 0, 0, 0, 0, 2 / height, 0, 0, 0, 0, e10, 0, e12, e13, e14, 1);
+    return this;
+  }
+
+  /**
    * Sets projection matrix of perspective camera (mutates this)
    * @param verticalFov vertical field of view in radians
    * @param near near clipping plane distance
    * @param far far clipping plane distance
    * @param aspect aspect ratio (width / height)
+   * @param options options for perspective projection matrix
    * @returns this instance, for method chaining
    * 
    * @example
@@ -733,19 +783,34 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    * const near = 0.01;
    * const far = 4.0;
    * const aspect = 300 / 150;
+   * 
+   * // for OpenGL, WebGL
    * m.perspective(fov, near, far, aspect);
+   * 
+   * // for WebGPU, Vulkan, DirectX, Metal
+   * m.perspective(fov, near, far, aspect, {depthZeroToOne: true});
    * ```
    */
-  perspective(verticalFov: number, near: number, far: number, aspect: number): Matrix4 {
+  perspective(
+    verticalFov: number,
+    near: number,
+    far: number,
+    aspect: number,
+    options?: ProjectionOptions
+  ): Matrix4 {
     const f = 1.0 / Math.tan(verticalFov / 2);
     this.set(f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, 1, -1, 0, 0, 1, 0);
 
+    const depthZeroToOne = options?.depthZeroToOne ?? DEFAULT_DEPTH_ZERO_TO_ONE;
+    const coefficient = depthZeroToOne ? 1 : 2;
+
     if (far !== Infinity) {
-      this.elements[10] = -(far + near) / (far - near);
-      this.elements[14] = -2 * far * near / (far - near);
+      const numerator = depthZeroToOne ? far : (far + near);
+      this.elements[10] = -numerator / (far - near);
+      this.elements[14] = -coefficient * far * near / (far - near);
     } else {
       this.elements[10] = -1;
-      this.elements[14] = -2 * near;
+      this.elements[14] = -coefficient * near;
     }
 
     return this;
@@ -768,3 +833,4 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
 }
 
 export {Matrix4};
+export type {ProjectionOptions};

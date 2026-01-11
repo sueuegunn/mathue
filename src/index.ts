@@ -1,3 +1,4 @@
+import type { ApplyMatrix4Options } from "./Vector3";
 import type { RangeOptions } from "./functions";
 import type { VectorDimension, MatrixOrder, TupleOf } from "./types";
 import type { AdditiveGroup } from "./AdditiveGroup";
@@ -6,6 +7,7 @@ import type { Matrix } from "./Matrix";
 import type { MultiplicativeMonoid } from "./MultiplicativeMonoid";
 import type { Normalizable } from "./Normalizable";
 import type { PartialMultiplicativeGroup } from "./PartialMultiplicativeGroup";
+import type { ProjectionOptions } from "./Matrix4";
 import type { Scalable } from "./Scalable";
 import type { Vector } from "./Vector";
 import { Matrix3 } from "./Matrix3";
@@ -20,8 +22,10 @@ import { range, sum, sumMap } from "./functions";
 
 // types
 export type {
+  ApplyMatrix4Options,
   VectorDimension,
   MatrixOrder,
+  ProjectionOptions,
   RangeOptions,
   TupleOf,
 };

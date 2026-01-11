@@ -39,9 +39,9 @@ describe('Quaternion', () => {
     const q = Quaternion.fromAxisAndAngle(axis, angle);
     const v = new Vector3(0, 0, 1);
     v.applyQuaternion(q);
-    expect(v.x).closeTo(1, PRECISION);
-    expect(v.x).closeTo(0, PRECISION);
-    expect(v.x).closeTo(0, PRECISION);
+    expect(v.x).toBeCloseTo(1, PRECISION);
+    expect(v.y).toBeCloseTo(0, PRECISION);
+    expect(v.z).toBeCloseTo(0, PRECISION);
   });
 
   it('fromAxisAndAngle() returns identity when axis is zero', () => {
@@ -93,7 +93,7 @@ describe('Quaternion', () => {
 
   it('norm()', () => {
     const q = new Quaternion(1, 2, 2, 4);
-    expect(q.norm()).closeTo(5, PRECISION);
+    expect(q.norm()).toBeCloseTo(5, PRECISION);
   });
 
   it('conjugate()', () => {
@@ -133,15 +133,15 @@ describe('Quaternion', () => {
     const ij = i.clone().multiply(j);
     const ji = j.clone().multiply(i);
 
-    expect(ij.a - k.a).closeTo(0, PRECISION);
-    expect(ij.b - k.b).closeTo(0, PRECISION);
-    expect(ij.c - k.c).closeTo(0, PRECISION);
-    expect(ij.d - k.d).closeTo(0, PRECISION);
+    expect(ij.a - k.a).toBeCloseTo(0, PRECISION);
+    expect(ij.b - k.b).toBeCloseTo(0, PRECISION);
+    expect(ij.c - k.c).toBeCloseTo(0, PRECISION);
+    expect(ij.d - k.d).toBeCloseTo(0, PRECISION);
     
-    expect(ji.a + k.a).closeTo(0, PRECISION);
-    expect(ji.b + k.b).closeTo(0, PRECISION);
-    expect(ji.c + k.c).closeTo(0, PRECISION);
-    expect(ji.d + k.d).closeTo(0, PRECISION);
+    expect(ji.a + k.a).toBeCloseTo(0, PRECISION);
+    expect(ji.b + k.b).toBeCloseTo(0, PRECISION);
+    expect(ji.c + k.c).toBeCloseTo(0, PRECISION);
+    expect(ji.d + k.d).toBeCloseTo(0, PRECISION);
   });
 
   it('invert()', () => {
@@ -150,10 +150,10 @@ describe('Quaternion', () => {
     if (!result) {
       expect.fail();
     }
-    expect(i.a).closeTo(0, PRECISION);
-    expect(i.b).closeTo(-1, PRECISION);
-    expect(i.c).closeTo(0, PRECISION);
-    expect(i.d).closeTo(0, PRECISION);
+    expect(i.a).toBeCloseTo(0, PRECISION);
+    expect(i.b).toBeCloseTo(-1, PRECISION);
+    expect(i.c).toBeCloseTo(0, PRECISION);
+    expect(i.d).toBeCloseTo(0, PRECISION);
   });
 
   it('invert() returns null when zero quaternion', () => {
@@ -164,10 +164,10 @@ describe('Quaternion', () => {
   it('divide()', () => {
     const q = Quaternion.identity();
     q.divide(Quaternion.identity());
-    expect(q.a).closeTo(1, PRECISION);
-    expect(q.b).closeTo(0, PRECISION);
-    expect(q.c).closeTo(0, PRECISION);
-    expect(q.d).closeTo(0, PRECISION);
+    expect(q.a).toBeCloseTo(1, PRECISION);
+    expect(q.b).toBeCloseTo(0, PRECISION);
+    expect(q.c).toBeCloseTo(0, PRECISION);
+    expect(q.d).toBeCloseTo(0, PRECISION);
   });
 
   it('divide() returns null when zero quaternion', () => {
@@ -179,45 +179,45 @@ describe('Quaternion', () => {
   it('multiplyScalar()', () => {
     const q = new Quaternion(1, 2, 3, 4);
     q.multiplyScalar(2);
-    expect(q.a).closeTo(2, PRECISION);
-    expect(q.b).closeTo(4, PRECISION);
-    expect(q.c).closeTo(6, PRECISION);
-    expect(q.d).closeTo(8, PRECISION);
+    expect(q.a).toBeCloseTo(2, PRECISION);
+    expect(q.b).toBeCloseTo(4, PRECISION);
+    expect(q.c).toBeCloseTo(6, PRECISION);
+    expect(q.d).toBeCloseTo(8, PRECISION);
   });
 
   it('divideScalar()', () => {
     const q = new Quaternion(2, 4, 6, 8);
     q.divideScalar(2);
-    expect(q.a).closeTo(1, PRECISION);
-    expect(q.b).closeTo(2, PRECISION);
-    expect(q.c).closeTo(3, PRECISION);
-    expect(q.d).closeTo(4, PRECISION);
+    expect(q.a).toBeCloseTo(1, PRECISION);
+    expect(q.b).toBeCloseTo(2, PRECISION);
+    expect(q.c).toBeCloseTo(3, PRECISION);
+    expect(q.d).toBeCloseTo(4, PRECISION);
   });
 
   it('rotateX()', () => {
     const q = Quaternion.identity();
     q.rotateX(Math.PI / 2);
-    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
-    expect(q.b).closeTo(Math.SQRT1_2, PRECISION);
-    expect(q.c).closeTo(0, PRECISION);
-    expect(q.d).closeTo(0, PRECISION);
+    expect(q.a).toBeCloseTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).toBeCloseTo(Math.SQRT1_2, PRECISION);
+    expect(q.c).toBeCloseTo(0, PRECISION);
+    expect(q.d).toBeCloseTo(0, PRECISION);
   });
 
   it('rotateY()', () => {
     const q = Quaternion.identity();
     q.rotateY(Math.PI / 2);
-    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
-    expect(q.b).closeTo(0, PRECISION);
-    expect(q.c).closeTo(Math.SQRT1_2, PRECISION);
-    expect(q.d).closeTo(0, PRECISION);
+    expect(q.a).toBeCloseTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).toBeCloseTo(0, PRECISION);
+    expect(q.c).toBeCloseTo(Math.SQRT1_2, PRECISION);
+    expect(q.d).toBeCloseTo(0, PRECISION);
   });
 
   it('rotateZ()', () => {
     const q = Quaternion.identity();
     q.rotateZ(Math.PI / 2);
-    expect(q.a).closeTo(Math.SQRT1_2, PRECISION);
-    expect(q.b).closeTo(0, PRECISION);
-    expect(q.c).closeTo(0, PRECISION);
-    expect(q.d).closeTo(Math.SQRT1_2, PRECISION);
+    expect(q.a).toBeCloseTo(Math.SQRT1_2, PRECISION);
+    expect(q.b).toBeCloseTo(0, PRECISION);
+    expect(q.c).toBeCloseTo(0, PRECISION);
+    expect(q.d).toBeCloseTo(Math.SQRT1_2, PRECISION);
   });
 });

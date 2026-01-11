@@ -149,10 +149,10 @@ describe('Vector4', () => {
   it('normalize()', () => {
     const v = new Vector4(1, 2, 2, 4);
     v.normalize();
-    expect(v.x).closeTo(0.2, 4);
-    expect(v.y).closeTo(0.4, 4);
-    expect(v.z).closeTo(0.4, 4);
-    expect(v.w).closeTo(0.8, 4);
+    expect(v.x).toBeCloseTo(0.2, 4);
+    expect(v.y).toBeCloseTo(0.4, 4);
+    expect(v.z).toBeCloseTo(0.4, 4);
+    expect(v.w).toBeCloseTo(0.8, 4);
   });
 
   it('normalize() does not change zero vector', () => {
@@ -169,10 +169,10 @@ describe('Vector4', () => {
     const v = Vector4.one();
     const m = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     v.applyMatrix4(m);
-    expect(v.x).closeTo(28, PRECISION);
-    expect(v.y).closeTo(32, PRECISION);
-    expect(v.z).closeTo(36, PRECISION);
-    expect(v.w).closeTo(40, PRECISION);
+    expect(v.x).toBeCloseTo(28, PRECISION);
+    expect(v.y).toBeCloseTo(32, PRECISION);
+    expect(v.z).toBeCloseTo(36, PRECISION);
+    expect(v.w).toBeCloseTo(40, PRECISION);
   });
 
   it('applyQuaternion()', () => {
@@ -181,9 +181,9 @@ describe('Vector4', () => {
     const angle = Math.PI / 2;
     const q = Quaternion.fromAxisAndAngle(axis, angle);
     v.applyQuaternion(q);
-    expect(v.x).closeTo(-1, PRECISION);
-    expect(v.y).closeTo(1, PRECISION);
-    expect(v.z).closeTo(1, PRECISION);
-    expect(v.w).closeTo(1, PRECISION);
+    expect(v.x).toBeCloseTo(-1, PRECISION);
+    expect(v.y).toBeCloseTo(1, PRECISION);
+    expect(v.z).toBeCloseTo(1, PRECISION);
+    expect(v.w).toBeCloseTo(1, PRECISION);
   });
 });

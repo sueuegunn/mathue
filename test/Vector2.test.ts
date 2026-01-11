@@ -125,24 +125,24 @@ describe('Vector2', () => {
   it('rotate()', () => {
     const v = new Vector2(1, 0);
     v.rotate(Math.PI / 2);
-    expect(v.x).closeTo(0, 4);
-    expect(v.y).closeTo(0, 4);
+    expect(v.x).toBeCloseTo(0, PRECISION);
+    expect(v.y).toBeCloseTo(1, PRECISION);
   });
 
   it('applyMatrix3()', () => {
     const v = Vector2.one();
     const m = new Matrix3(1, 2, 3, 4, 5, 6, 7, 8, 9);
     v.applyMatrix3(m);
-    expect(v.x).closeTo(5, PRECISION);
-    expect(v.y).closeTo(7, PRECISION);
+    expect(v.x).toBeCloseTo(5, PRECISION);
+    expect(v.y).toBeCloseTo(7, PRECISION);
   });
 
   it('applyMatrix4()', () => {
     const v = Vector2.one();
     const m = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
     v.applyMatrix4(m);
-    expect(v.x).closeTo(6, PRECISION);
-    expect(v.y).closeTo(8, PRECISION);
+    expect(v.x).toBeCloseTo(6, PRECISION);
+    expect(v.y).toBeCloseTo(8, PRECISION);
   });
 
   it('applyQuaternion()', () => {
@@ -151,7 +151,7 @@ describe('Vector2', () => {
     const angle = Math.PI / 2;
     const q = Quaternion.fromAxisAndAngle(axis, angle);
     v.applyQuaternion(q);
-    expect(v.x).closeTo(-1, PRECISION);
-    expect(v.y).closeTo(1, PRECISION);
+    expect(v.x).toBeCloseTo(-1, PRECISION);
+    expect(v.y).toBeCloseTo(1, PRECISION);
   });
 });
