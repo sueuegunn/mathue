@@ -346,12 +346,10 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
    */
   setTranslation(translation: Vector3): Matrix4 {
     const {x, y, z} = translation;
-    const [e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33] = this.elements;
     this.setIdentity();
-    this.elements[12] = e00 * x + e10 * y + e20 * z + e30;
-    this.elements[13] = e01 * x + e11 * y + e21 * z + e31;
-    this.elements[14] = e02 * x + e12 * y + e22 * z + e32;
-    this.elements[15] = e03 * x + e13 * y + e23 * z + e33;
+    this.elements[12] = x;
+    this.elements[13] = y;
+    this.elements[14] = z;
     return this;
   }
 
@@ -386,15 +384,15 @@ class Matrix4 implements Matrix<4>, AdditiveGroup<Matrix4>, PartialMultiplicativ
     const cd = c * d;
     this.set(
       1 - s * (c2 + d2),
-      s * (bc - ad),
-      s * (bd + ac),
+      -s * (bc - ad),
+      -s * (bd + ac),
       0,
-      s * (bc + ad),
+      -s * (bc + ad),
       1 - s * (b2 + d2),
-      s * (cd - ab),
+      -s * (cd - ab),
       0,
-      s * (bd - ac),
-      s * (cd + ab),
+      -s * (bd - ac),
+      -s * (cd + ab),
       1 - s * (b2 + c2),
       0,
       0,

@@ -427,8 +427,6 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
 
     const {x, y, z, w} = tmpMatrix4._applyVector(this.x, this.y, this.z, beforeW);
 
-    console.log('xyzw', x, y, z, w);
-
     const afterX = asDirection || w === 0 ? x : x / w;
     const afterY = asDirection || w === 0 ? y : y / w;
     const afterZ = asDirection || w === 0 ? z : z / w;

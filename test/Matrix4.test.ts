@@ -84,9 +84,9 @@ describe('Matrix4', () => {
     m.setRotation(q);
     const v = new Vector3(0, 1, 0);
     v.applyMatrix4(m);
-    expect(v.x).closeTo(0, PRECISION);
-    expect(v.y).closeTo(0, PRECISION);
-    expect(v.z).closeTo(1, PRECISION);
+    expect(v.x).toBeCloseTo(0, PRECISION);
+    expect(v.y).toBeCloseTo(0, PRECISION);
+    expect(v.z).toBeCloseTo(1, PRECISION);
   });
 
   it('add()', () => {
@@ -252,36 +252,36 @@ describe('Matrix4', () => {
   it('setScale()', () => {
     const m = Matrix4.identity();
     m.setScale(new Vector3(2, 3, 4));
-    
+
     const {order} = m;
     for (const row of range(order)) {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          const e = row === 3 ? 1 : row + 1;
-          expect(m.elements[index]).closeTo(e, PRECISION);
+          const e = row === 3 ? 1 : row + 2;
+          expect(m.elements[index]).toBeCloseTo(e, PRECISION);
         } else {
-          expect(m.elements[index]).closeTo(0, PRECISION);
+          expect(m.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }
   });
 
   it('setTranslation()', () => {
-      const m = Matrix4.identity();
-      m.setTranslation(new Vector3(2, 3, 4));
+    const m = Matrix4.identity();
+    m.setTranslation(new Vector3(2, 3, 4));
 
-      const {order} = m;
+    const {order} = m;
     for (const row of range(order)) {
       for (const column of range(order)) {
         const index = row * order + column;
         if (row === column) {
-          expect(m.elements[index]).closeTo(1, PRECISION);
+          expect(m.elements[index]).toBeCloseTo(1, PRECISION);
         } else if (row === 3) {
-          const e = column === 3 ? 1 : column + 1;
-          expect(m.elements[index]).closeTo(e, PRECISION);
+          const e = column === 3 ? 1 : column + 2;
+          expect(m.elements[index]).toBeCloseTo(e, PRECISION);
         } else {
-          expect(m.elements[index]).closeTo(0, PRECISION);
+          expect(m.elements[index]).toBeCloseTo(0, PRECISION);
         }
       }
     }
@@ -495,10 +495,10 @@ describe('Matrix4', () => {
 
     const vertex = Vector3.one();
     vertex.applyMatrix4(model);
-    
-    expect(vertex.x).closeTo(-2, PRECISION);
-    expect(vertex.y).closeTo(4, PRECISION);
-    expect(vertex.z).closeTo(7, PRECISION);
+
+    expect(vertex.x).toBeCloseTo(-2, PRECISION);
+    expect(vertex.y).toBeCloseTo(4, PRECISION);
+    expect(vertex.z).toBeCloseTo(7, PRECISION);
   });
 });
 
