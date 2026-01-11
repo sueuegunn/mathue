@@ -127,9 +127,9 @@ describe('Vector3', () => {
   it('normalize()', () => {
     const v = new Vector3(2, 3, 6);
     v.normalize();
-    expect(v.x).closeTo(2 / 7, 4);
-    expect(v.y).closeTo(3 / 7, 4);
-    expect(v.z).closeTo(6 / 7, 4);
+    expect(v.x).toBeCloseTo(2 / 7, 4);
+    expect(v.y).toBeCloseTo(3 / 7, 4);
+    expect(v.z).toBeCloseTo(6 / 7, 4);
   });
 
   it('normalize() does not change zero vector', () => {
