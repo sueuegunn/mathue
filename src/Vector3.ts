@@ -143,6 +143,36 @@ class Vector3 implements Vector<3>, AdditiveGroup<Vector3>, Scalable<Vector3>, N
   }
 
   /**
+   * Sets x component (mutate this)
+   * @param x 
+   * @returns this instance, for method chaining
+   */
+  setX(x: number): Vector3 {
+    this.x = x;
+    return this;
+  }
+
+  /**
+   * Sets y component (mutate this)
+   * @param y 
+   * @returns this instance, for method chaining
+   */
+  setY(y: number): Vector3 {
+    this.y = y;
+    return this;
+  }
+
+  /**
+   * Sets z component (mutate this)
+   * @param z 
+   * @returns this instance, for method chaining
+   */
+  setZ(z: number): Vector3 {
+    this.z = z;
+    return this;
+  }
+
+  /**
    * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods
