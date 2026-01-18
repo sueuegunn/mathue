@@ -42,7 +42,16 @@ Standard math libraries often create new objects for every calculation, causing 
 ## 📦 Installation
 
 ```bash
+# from npm
 npm install mathue
+```
+
+```html
+<!-- UMD from UNPKG -->
+<script src="https://unpkg.com/mathue"></script>
+
+<!-- UMD from jsDeliver -->
+<script src="https://cdn.jsdelivr.net/npm/mathue"></script>
 ```
 
 <br>
