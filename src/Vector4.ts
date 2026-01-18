@@ -141,6 +141,46 @@ class Vector4 implements Vector<4>, AdditiveGroup<Vector4>, Scalable<Vector4>, N
   }
 
   /**
+   * Sets x component (mutate this)
+   * @param x 
+   * @returns this instance, for method chaining
+   */
+  setX(x: number): Vector4 {
+    this.x = x;
+    return this;
+  }
+
+  /**
+   * Sets y component (mutate this)
+   * @param y 
+   * @returns this instance, for method chaining
+   */
+  setY(y: number): Vector4 {
+    this.y = y;
+    return this;
+  }
+
+  /**
+   * Sets z component (mutate this)
+   * @param z 
+   * @returns this instance, for method chaining
+   */
+  setZ(z: number): Vector4 {
+    this.z = z;
+    return this;
+  }
+
+  /**
+   * Sets w component (mutate this)
+   * @param w 
+   * @returns this instance, for method chaining
+   */
+  setW(w: number): Vector4 {
+    this.w = w;
+    return this;
+  }
+
+  /**
    * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods

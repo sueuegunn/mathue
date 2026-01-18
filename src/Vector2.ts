@@ -102,6 +102,26 @@ class Vector2 implements Vector<2>, AdditiveGroup<Vector2>, Scalable<Vector2>, N
   }
 
   /**
+   * Sets x component (mutate this)
+   * @param x 
+   * @returns this instance, for method chaining
+   */
+  setX(x: number): Vector2 {
+    this.x = x;
+    return this;
+  }
+
+  /**
+   * Sets y component (mutate this)
+   * @param y 
+   * @returns this instance, for method chaining
+   */
+  setY(y: number): Vector2 {
+    this.y = y;
+    return this;
+  }
+
+  /**
    * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods

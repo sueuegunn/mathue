@@ -78,6 +78,16 @@ class Vector1 implements Vector<1>, AdditiveGroup<Vector1>, Scalable<Vector1>, N
   }
 
   /**
+   * Sets x component (mutate this)
+   * @param x 
+   * @returns this instance, for method chaining
+   */
+  setX(x: number): Vector1 {
+    this.x = x;
+    return this;
+  }
+
+  /**
    * Creates a zero vector instance
    * @returns new zero vector instance
    * @group Factory Methods
