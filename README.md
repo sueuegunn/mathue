@@ -79,6 +79,59 @@ model.setIdentity()
   .multiplyScale(scale);
 ```
 
+```ts
+// Calculates view matrix
+const phi = 0.25 * Math.PI;
+const theta = 0.5 * Math.PI;
+const radius = 2;
+const polar = new PolarCoordinate3(phi, theta, radius);
+
+// A camera on a sphere looking at the origin
+const target = Vector3.zero();
+const position = Vector3.zero();
+const up = Vector3.zero();
+polar.toVector3(position);
+polar.toTangentZ(tangent);
+
+const view = Matrix4.identity();
+view.lookAt(position, target, up);
+```
+
+```ts
+// Calculates projection matrix (Perspective camera)
+const {projection, clientSize, _verticalFov, _near, _far} = this;
+const verticalFov = 0.5 * Math.PI;
+const near = 0.1;
+const far = 4.0;
+const aspect = 1.5; // width / height
+
+// for WebGL, OpenGL, ...
+const projection = Matrix4.identity();
+projection.perspective(verticalFov, near, far, aspect);
+
+// for WebGPU, Vulkan, DirectX, Metal, ...
+const options = { depthZeroToOne: true };
+projection.perspective(verticalFov, near, far, aspect, options);
+```
+
+```ts
+// Calculates projection matrix (Orthographic camera)
+const left = -3;
+const right = 3;
+const bottom = -2;
+const top = 2;
+const near = 0.1;
+const far = 4.0;
+
+// for WebGL, OpenGL, ...
+const projection = Matrix4.identity();
+projection.orthographic(left, right, bottom, top, near, far);
+
+// for WebGPU, Vulkan, DirectX, Metal, ...
+const options = { depthZeroToOne: true };
+projection.orthographic(left, right, bottom, top, near, far, options);
+```
+
 <br>
 
 ## 📚 API Overview
