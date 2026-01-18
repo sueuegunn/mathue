@@ -19,6 +19,12 @@ describe('Vector1', () => {
     expect(v.x).toBe(1);
   });
 
+  it('setX()', () => {
+    const v = Vector1.zero();
+    v.setX(1);
+    expect(v.x).toBe(1);
+  });
+
   it('zero()', () => {
     const v = Vector1.zero();
     expect(v.x).toBe(0);

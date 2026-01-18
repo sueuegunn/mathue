@@ -38,6 +38,24 @@ describe('Vector3', () => {
     expect(v.z).toBe(1);
   });
 
+  it('setX()', () => {
+    const v = Vector3.zero();
+    v.setX(1);
+    expect(v.x).toBe(1);
+  });
+
+  it('setY()', () => {
+    const v = Vector3.zero();
+    v.setY(1);
+    expect(v.y).toBe(1);
+  });
+
+  it('setZ()', () => {
+    const v = Vector3.zero();
+    v.setZ(1);
+    expect(v.z).toBe(1);
+  });
+
   it('zero()', () => {
     const v = Vector3.zero();
     expect(v.x).toBe(0);

@@ -51,6 +51,30 @@ describe('Vector4', () => {
     expect(v.w).toBe(1);
   });
 
+  it('setX()', () => {
+    const v = Vector4.zero();
+    v.setX(1);
+    expect(v.x).toBe(1);
+  });
+
+  it('setY()', () => {
+    const v = Vector4.zero();
+    v.setY(1);
+    expect(v.y).toBe(1);
+  });
+
+  it('setZ()', () => {
+    const v = Vector4.zero();
+    v.setZ(1);
+    expect(v.z).toBe(1);
+  });
+
+  it('setW()', () => {
+    const v = Vector4.zero();
+    v.setW(1);
+    expect(v.w).toBe(1);
+  });
+
   it('zero()', () => {
     const v = Vector4.zero();
     expect(v.x).toBe(0);
