@@ -6,6 +6,9 @@
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/mathue.js",
+  "browser": "./dist/mathue.umd.cjs",
+  "unpkg": "./dist/mathue.umd.cjs",
+  "jsdelivr": "./dist/mathue.umd.cjs",
   "files": [
     "dist"
   ],
