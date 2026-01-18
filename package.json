@@ -20,9 +20,7 @@
     }
   },
   "homepage": "https://sueuegunn.github.io/mathue",
-  "repository": {
-    "url": "https://github.com/sueuegunn/mathue"
-  },
+  "repository": "sueuegunn/mathue",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/sueuegunn"
