@@ -19,4 +19,5 @@ jobs:
       - run: npm test
       - name: Publish to npm
         run: |
+          rm -f .npmrc
           npm publish --provenance --access public
